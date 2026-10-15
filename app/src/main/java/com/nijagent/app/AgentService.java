@@ -176,6 +176,95 @@ public class AgentService extends AccessibilityService {
         }, "nijagent-worker").start();
     }
 
+    /** Chat: user se baat karo, sawalon ka jawab do (bina phone control ke). */
+    public void chat(final String msg) {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    String reply = handleChat(msg);
+                    postResult(reply);
+                } catch (Throwable t) {
+                    postResult("Maaf karo, jawab nahi de paya: " + t.getMessage());
+                }
+            }
+        }, "nijagent-chat").start();
+    }
+
+    private String handleChat(String msg) {
+        String lower = msg.toLowerCase().trim();
+
+        // Apne baare me sawal: aaj kya kiya
+        if (lower.contains("aaj kya kiya") || lower.contains("aaj kya kia") ||
+            lower.contains("what did you do today") || lower.contains("aaj ka kaam")) {
+            return getTodaySummary();
+        }
+        // Kya seekha
+        if (lower.contains("kya seekha") || lower.contains("kya sikha") ||
+            lower.contains("what did you learn") || lower.contains("kaun se skill")) {
+            return getSkillsSummary();
+        }
+        // Kaun ho / intro
+        if (lower.contains("tum kaun") || lower.contains("who are you") ||
+            lower.contains("apna naam") || lower.contains("your name")) {
+            return "Main NijAgent hun — tumhara phone agent. Phone control kar sakta hun (apps kholna, tap karna, type karna), skills seekh sakta hun, aur tumse baat bhi kar sakta hun. Kuch karwana ho to command do, ya aise hi baat karo!";
+        }
+        // Help
+        if (lower.equals("help") || lower.contains("madad") || lower.contains("kya kar sakte")) {
+            return "Main ye kar sakta hun:\n• Phone control: 'youtube kholo', 'whatsapp kholo'\n• Search: 'youtube par ___ search karo'\n• Baat: 'aaj kya kiya', 'kya seekha'\n• Skills dekho: Skills tab me\nBolo, kya karun?";
+        }
+        // Default: AI se conversational jawab
+        try {
+            String system = "You are NijAgent, a friendly phone AI assistant. The user speaks Hindi/Hinglish/English. Reply in the user's language (simple Hinglish). Keep it short (2-3 lines max). You can control the phone, learn skills, and chat. If they ask to DO something on the phone, say you'll do it and suggest the command.";
+            return geminiChat(system, msg);
+        } catch (Exception e) {
+            return "Samajh nahi aaya. 'help' likho dekhne ke liye main kya kar sakta hun.";
+        }
+    }
+
+    private String getTodaySummary() {
+        try {
+            String hj = store.historyJson();
+            JSONArray hist = new JSONArray(hj);
+            if (hist.length() == 0) return "Aaj abhi koi kaam nahi kiya. Koi command do!";
+            StringBuilder sb = new StringBuilder("Aaj maine ye kiya:\n");
+            int count = Math.min(5, hist.length());
+            for (int i = hist.length() - count; i < hist.length(); i++) {
+                JSONObject h = hist.optJSONObject(i);
+                if (h != null) sb.append("• ").append(h.optString("cmd", "?")).append("\n");
+            }
+            return sb.toString();
+        } catch (Exception e) {
+            return "History nahi mil payi.";
+        }
+    }
+
+    private String getSkillsSummary() {
+        try {
+            int n = store.count();
+            if (n == 0) return "Abhi koi skill nahi seekhi. Koi kaam karwao, main seekh jaunga!";
+            return "Maine " + n + " skills seekhi hain. Skills tab me dekh sakte ho. Har naya kaam karne par main nayi skill seekhta hun!";
+        } catch (Exception e) {
+            return "Skills nahi mil payi.";
+        }
+    }
+
+    private String geminiChat(String system, String user) throws java.io.IOException {
+        String key = prefs.getString("gemini_key", "");
+        if (key.length() > 10) {
+            try {
+                return GeminiClient.call(key, GeminiClient.DEFAULT_MODEL, system, user, null);
+            } catch (java.io.IOException ignored) {}
+        }
+        String groqKey = prefs.getString("groq_key", "");
+        if (groqKey.length() > 10) {
+            try {
+                return FreeAiClient.callGroq(groqKey, system, user);
+            } catch (java.io.IOException ignored) {}
+        }
+        return FreeAiClient.callPollinations(system, user);
+    }
+
     /** Saved skill ko seedha chalao (Practice / Run button). */
     public void runSkillDirect(final String id, final String paramsJson) {
         final JSONObject sk = store.find(id);
