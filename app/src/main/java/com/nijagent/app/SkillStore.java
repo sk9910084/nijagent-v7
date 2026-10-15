@@ -43,6 +43,26 @@ public class SkillStore {
         histFile = new File(c.getFilesDir(), "history.json");
         skills = readArr(skillFile);
         history = readArr(histFile);
+        // Pehli baar: 10 default skills load karo
+        if (skills.length() == 0) {
+            try {
+                java.io.InputStream in = c.getAssets().open("default_skills.json");
+                java.io.ByteArrayOutputStream out = new java.io.ByteArrayOutputStream();
+                byte[] buf = new byte[8192]; int n;
+                while ((n = in.read(buf)) != -1) out.write(buf, 0, n);
+                in.close();
+                skills = new JSONArray(out.toString("UTF-8"));
+                saveSkills();
+            } catch (Exception ignored) {}
+        }
+    }
+
+    private void saveSkills() {
+        try {
+            java.io.FileWriter w = new java.io.FileWriter(skillFile);
+            w.write(skills.toString());
+            w.close();
+        } catch (Exception ignored) {}
     }
 
     // ---------------------------------------------------------------- file io
