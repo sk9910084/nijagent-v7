@@ -151,6 +151,13 @@ h1{font-size:28px;font-weight:700} h2{font-size:22px;font-weight:700}
 .logbox{background:var(--card);border-radius:14px;padding:14px;margin-top:12px;font-size:13px;
   line-height:1.7;white-space:pre-wrap;word-break:break-word;max-height:38vh;overflow-y:auto}
 .logbox::-webkit-scrollbar{width:0}
+.chatbox{display:flex;flex-direction:column;gap:8px;padding:12px;margin-top:12px;min-height:200px;max-height:50vh;overflow-y:auto;background:rgba(0,0,0,.2);border-radius:14px}
+.chatbox::-webkit-scrollbar{width:0}
+.chat-msg{max-width:85%;padding:10px 14px;border-radius:16px;font-size:14px;line-height:1.5;word-wrap:break-word;animation:fadeIn .3s}
+.chat-msg.user{align-self:flex-end;background:linear-gradient(135deg,#4d7cff,#6a5cff);color:#fff;border-bottom-right-radius:4px}
+.chat-msg.agent{align-self:flex-start;background:rgba(255,255,255,.08);color:var(--text);border-bottom-left-radius:4px;border:1px solid rgba(255,255,255,.08)}
+.chat-msg .time{font-size:10px;opacity:.6;margin-top:4px}
+@keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
 .kv{display:flex;justify-content:space-between;padding:12px 2px;border-bottom:1px solid rgba(255,255,255,.05);font-size:14px}
 .tabs{display:flex;gap:8px;margin-top:12px}
 .tab{flex:1;border:none;border-radius:10px;padding:11px;background:var(--card);color:var(--sub);
@@ -327,7 +334,7 @@ textarea.inp{min-height:110px;resize:none}
     <div id="agent-enable" style="display:none;margin-top:10px">
       <button class="btn small" onclick="bridge().openAccessibilitySettings()">Accessibility me NijAgent ON karo</button>
     </div>
-    <div class="logbox" id="agent-log">NijAgent taiyaar hai. Command likho ya 🎤 dabakar bolo.</div>
+    <div class="chatbox" id="agent-log"><div class="chat-msg agent">NijAgent taiyaar hai! Kuch bhi pucho ya command do — jaise "youtube kholo" ya "google par ai news search karo".<div class="time">abhi</div></div></div>
     <div class="cmdbox">
       <div class="inrow">
         <input id="agent-input" placeholder="Command likho... (help)" onkeydown="if(event.key==='Enter')sendFromAgent()">
@@ -880,11 +887,18 @@ function refreshMenu() {
 }
 
 /* ---------- agent tab ---------- */
-function agentLog(t) { var l = $('agent-log'); l.textContent += '\n' + t; l.scrollTop = l.scrollHeight; }
+function agentLog(t, who) {
+  var l = $('agent-log');
+  var d = document.createElement('div');
+  d.className = 'chat-msg ' + (who || 'agent');
+  var now = new Date(); var tm = now.getHours() + ':' + String(now.getMinutes()).padStart(2,'0');
+  d.innerHTML = esc(t) + '<div class="time">' + tm + '</div>';
+  l.appendChild(d); l.scrollTop = l.scrollHeight;
+}
 function refreshAgent() { refreshStatus(); }
-window.onAgentResult = function (t) { agentLog('NijAgent: ' + t); taskLog.push(t); renderTaskLive(); if (cur !== 'agent' && cur !== 'task') toast(clip(t, 120)); };
+window.onAgentResult = function (t) { agentLog(t, 'agent'); taskLog.push(t); renderTaskLive(); if (cur !== 'agent' && cur !== 'task') toast(clip(t, 120)); };
 function sendFromHome() { var i = $('home-input'), v = i.value.trim(); if (!v) return; i.value = ''; runTask(v); }
-function sendFromAgent() { var i = $('agent-input'), v = i.value.trim(); if (!v) return; i.value = ''; agentLog('Aap: ' + v); runTask(v); }
+function sendFromAgent() { var i = $('agent-input'), v = i.value.trim(); if (!v) return; i.value = ''; agentLog(v, 'user'); runTask(v); }
 
 /* ---------- task run ---------- */
 function resetTask(cmd) {
