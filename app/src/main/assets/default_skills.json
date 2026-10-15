@@ -1148,5 +1148,1255 @@
   "streak_fail": 0,
   "version": 1,
   "broken": false
+ },
+ {
+  "name": "CapCut New Project",
+  "desc": "CapCut mein naya video project banao aur gallery se clip import karo",
+  "triggers": [
+   "capcut mein naya project banao",
+   "capcut kholo aur video edit karo",
+   "capcut mein {title} video banao",
+   "video editing shuru karo capcut mein",
+   "capcut mein clips import karo"
+  ],
+  "params": [
+   "title"
+  ],
+  "steps": [
+   {
+    "a": "open",
+    "app": "CapCut"
+   },
+   {
+    "a": "wait",
+    "ms": 1500
+   },
+   {
+    "a": "tap",
+    "sel": {
+     "desc": "New project"
+    }
+   },
+   {
+    "a": "wait",
+    "ms": 1200
+   },
+   {
+    "a": "tap",
+    "sel": {
+     "desc": "Add"
+    }
+   },
+   {
+    "a": "wait",
+    "ms": 1000
+   },
+   {
+    "a": "ask",
+    "text": "Gallery se jo clips/photos chahiye wo select karo, phir 'Add' dabao. Kaam ho jaye to 'Ho gaya' dabao."
+   },
+   {
+    "a": "wait",
+    "ms": 800
+   }
+  ],
+  "source": "imported",
+  "enabled": true,
+  "id": "skill_capcut_new_project",
+  "ok": 0,
+  "fail": 0,
+  "uses": 0,
+  "streak_fail": 0,
+  "version": 1,
+  "broken": false
+ },
+ {
+  "name": "CapCut Add Text",
+  "desc": "CapCut video mein text/caption add karo",
+  "triggers": [
+   "capcut mein text add karo {text}",
+   "video mein caption lagao {text}",
+   "capcut mein {text} likho",
+   "video pe text dalo {text}",
+   "capcut text overlay {text}"
+  ],
+  "params": [
+   "text"
+  ],
+  "steps": [
+   {
+    "a": "tap",
+    "sel": {
+     "text": "Text"
+    }
+   },
+   {
+    "a": "wait",
+    "ms": 800
+   },
+   {
+    "a": "tap",
+    "sel": {
+     "desc": "Add text"
+    }
+   },
+   {
+    "a": "wait",
+    "ms": 600
+   },
+   {
+    "a": "type",
+    "text": "{text}"
+   },
+   {
+    "a": "tap",
+    "sel": {
+     "desc": "Done"
+    }
+   },
+   {
+    "a": "wait",
+    "ms": 500
+   }
+  ],
+  "source": "imported",
+  "enabled": true,
+  "id": "skill_capcut_add_text",
+  "ok": 0,
+  "fail": 0,
+  "uses": 0,
+  "streak_fail": 0,
+  "version": 1,
+  "broken": false
+ },
+ {
+  "name": "CapCut Add Voiceover",
+  "desc": "CapCut mein voiceover record karo apni awaaz se",
+  "triggers": [
+   "capcut mein voiceover karo",
+   "video mein apni awaaz add karo",
+   "capcut voiceover record karo",
+   "awaaz dalo video mein",
+   "capcut me voice add karo"
+  ],
+  "params": [],
+  "steps": [
+   {
+    "a": "tap",
+    "sel": {
+     "text": "Audio"
+    }
+   },
+   {
+    "a": "wait",
+    "ms": 700
+   },
+   {
+    "a": "tap",
+    "sel": {
+     "text": "Voiceover"
+    }
+   },
+   {
+    "a": "wait",
+    "ms": 600
+   },
+   {
+    "a": "ask",
+    "text": "Record button dabao aur apni awaaz record karo. Recording khatam hone par phir dabao. Ho jaye to 'Ho gaya' batao."
+   },
+   {
+    "a": "tap",
+    "sel": {
+     "desc": "Save"
+    }
+   }
+  ],
+  "source": "imported",
+  "enabled": true,
+  "id": "skill_capcut_add_voiceover",
+  "ok": 0,
+  "fail": 0,
+  "uses": 0,
+  "streak_fail": 0,
+  "version": 1,
+  "broken": false
+ },
+ {
+  "name": "CapCut Auto Captions",
+  "desc": "CapCut se automatic captions/subtitles generate karo",
+  "triggers": [
+   "capcut mein auto captions lagao",
+   "video mein automatic subtitles add karo",
+   "capcut auto subtitle karo",
+   "captions generate karo capcut se",
+   "subtitles lagao video mein"
+  ],
+  "params": [],
+  "steps": [
+   {
+    "a": "tap",
+    "sel": {
+     "text": "Text"
+    }
+   },
+   {
+    "a": "wait",
+    "ms": 700
+   },
+   {
+    "a": "tap",
+    "sel": {
+     "desc": "Auto captions"
+    }
+   },
+   {
+    "a": "wait",
+    "ms": 800
+   },
+   {
+    "a": "tap",
+    "sel": {
+     "desc": "Generate"
+    }
+   },
+   {
+    "a": "wait",
+    "ms": 6000
+   },
+   {
+    "a": "tap",
+    "sel": {
+     "desc": "Done"
+    }
+   }
+  ],
+  "source": "imported",
+  "enabled": true,
+  "id": "skill_capcut_auto_captions",
+  "ok": 0,
+  "fail": 0,
+  "uses": 0,
+  "streak_fail": 0,
+  "version": 1,
+  "broken": false
+ },
+ {
+  "name": "CapCut Export Video",
+  "desc": "CapCut mein edited video export/save karo phone mein",
+  "triggers": [
+   "capcut se video export karo",
+   "video save karo capcut se",
+   "capcut mein video download karo",
+   "edited video export karo",
+   "capcut video phone mein save karo"
+  ],
+  "params": [],
+  "steps": [
+   {
+    "a": "tap",
+    "sel": {
+     "desc": "Export"
+    }
+   },
+   {
+    "a": "wait",
+    "ms": 1000
+   },
+   {
+    "a": "tap",
+    "sel": {
+     "desc": "1080P"
+    }
+   },
+   {
+    "a": "wait",
+    "ms": 500
+   },
+   {
+    "a": "tap",
+    "sel": {
+     "desc": "Export",
+     "n": 2
+    }
+   },
+   {
+    "a": "wait",
+    "ms": 8000
+   }
+  ],
+  "source": "imported",
+  "enabled": true,
+  "id": "skill_capcut_export_video",
+  "ok": 0,
+  "fail": 0,
+  "uses": 0,
+  "streak_fail": 0,
+  "version": 1,
+  "broken": false
+ },
+ {
+  "name": "ChatGPT Script Write",
+  "desc": "ChatGPT se kisi bhi topic par YouTube/Reel script likhwao",
+  "triggers": [
+   "chatgpt se {topic} par script likho",
+   "{topic} ki script chatgpt se banao",
+   "chatgpt se youtube script {topic}",
+   "{topic} par video script likhwao",
+   "chatgpt kholo aur {topic} script likho"
+  ],
+  "params": [
+   "topic"
+  ],
+  "steps": [
+   {
+    "a": "open",
+    "app": "ChatGPT"
+   },
+   {
+    "a": "wait",
+    "ms": 1500
+   },
+   {
+    "a": "tap",
+    "sel": {
+     "desc": "New chat"
+    }
+   },
+   {
+    "a": "wait",
+    "ms": 800
+   },
+   {
+    "a": "tap",
+    "sel": {
+     "desc": "Message"
+    }
+   },
+   {
+    "a": "type",
+    "text": "Mujhe {topic} par ek engaging YouTube video script chahiye. Script mein hook (pehle 5 seconds), main content (3-5 points), aur call to action hona chahiye. Hinglish mein likho. 300-400 words ka script do."
+   },
+   {
+    "a": "enter"
+   },
+   {
+    "a": "wait",
+    "ms": 4000
+   }
+  ],
+  "source": "imported",
+  "enabled": true,
+  "id": "skill_chatgpt_script_write",
+  "ok": 0,
+  "fail": 0,
+  "uses": 0,
+  "streak_fail": 0,
+  "version": 1,
+  "broken": false
+ },
+ {
+  "name": "ChatGPT Image Prompt",
+  "desc": "ChatGPT se AI image generation ka detailed prompt banwao",
+  "triggers": [
+   "chatgpt se {idea} ka image prompt banao",
+   "{idea} ke liye image prompt likhwao",
+   "chatgpt se ai image prompt {idea}",
+   "{idea} ka photo prompt chatgpt se",
+   "image banane ka prompt do {idea}"
+  ],
+  "params": [
+   "idea"
+  ],
+  "steps": [
+   {
+    "a": "open",
+    "app": "ChatGPT"
+   },
+   {
+    "a": "wait",
+    "ms": 1500
+   },
+   {
+    "a": "tap",
+    "sel": {
+     "desc": "New chat"
+    }
+   },
+   {
+    "a": "wait",
+    "ms": 800
+   },
+   {
+    "a": "tap",
+    "sel": {
+     "desc": "Message"
+    }
+   },
+   {
+    "a": "type",
+    "text": "Mujhe {idea} ke liye ek detailed AI image generation prompt chahiye jo Midjourney aur DALL-E dono ke liye kaam kare. Style, lighting, composition, camera angle sab include karo. English mein likho. Sirf prompt do, explanation mat do."
+   },
+   {
+    "a": "enter"
+   },
+   {
+    "a": "wait",
+    "ms": 3000
+   }
+  ],
+  "source": "imported",
+  "enabled": true,
+  "id": "skill_chatgpt_image_prompt",
+  "ok": 0,
+  "fail": 0,
+  "uses": 0,
+  "streak_fail": 0,
+  "version": 1,
+  "broken": false
+ },
+ {
+  "name": "ChatGPT Reel Script",
+  "desc": "ChatGPT se 30-60 second Instagram Reel ya YouTube Short script banwao",
+  "triggers": [
+   "chatgpt se {topic} ki reel script banao",
+   "{topic} par short video script likho",
+   "reels script chahiye {topic} par",
+   "chatgpt se youtube short {topic}",
+   "{topic} ka 60 second script"
+  ],
+  "params": [
+   "topic"
+  ],
+  "steps": [
+   {
+    "a": "open",
+    "app": "ChatGPT"
+   },
+   {
+    "a": "wait",
+    "ms": 1500
+   },
+   {
+    "a": "tap",
+    "sel": {
+     "desc": "New chat"
+    }
+   },
+   {
+    "a": "wait",
+    "ms": 800
+   },
+   {
+    "a": "tap",
+    "sel": {
+     "desc": "Message"
+    }
+   },
+   {
+    "a": "type",
+    "text": "{topic} par 60-second viral reel/short video script likho. Format: [HOOK - 5 sec] [MAIN POINT 1 - 15 sec] [MAIN POINT 2 - 15 sec] [MAIN POINT 3 - 15 sec] [CTA - 10 sec]. Energetic aur punchy style rakho. Hinglish mein."
+   },
+   {
+    "a": "enter"
+   },
+   {
+    "a": "wait",
+    "ms": 4000
+   }
+  ],
+  "source": "imported",
+  "enabled": true,
+  "id": "skill_chatgpt_reel_script",
+  "ok": 0,
+  "fail": 0,
+  "uses": 0,
+  "streak_fail": 0,
+  "version": 1,
+  "broken": false
+ },
+ {
+  "name": "Chrome Research Tab",
+  "desc": "Chrome mein kisi topic par deep research karo multiple tabs mein",
+  "triggers": [
+   "chrome mein {topic} research karo",
+   "{topic} ke baare mein chrome se research",
+   "chrome pe {topic} dhundo",
+   "{topic} par deep research chrome mein",
+   "browser mein {topic} research karo"
+  ],
+  "params": [
+   "topic"
+  ],
+  "steps": [
+   {
+    "a": "open",
+    "app": "Chrome"
+   },
+   {
+    "a": "wait",
+    "ms": 1200
+   },
+   {
+    "a": "tap",
+    "sel": {
+     "desc": "Address bar"
+    }
+   },
+   {
+    "a": "type",
+    "text": "{topic} complete guide 2024"
+   },
+   {
+    "a": "enter"
+   },
+   {
+    "a": "wait",
+    "ms": 2000
+   },
+   {
+    "a": "tap",
+    "sel": {
+     "desc": "Open new tab"
+    }
+   },
+   {
+    "a": "wait",
+    "ms": 800
+   },
+   {
+    "a": "tap",
+    "sel": {
+     "desc": "Address bar"
+    }
+   },
+   {
+    "a": "type",
+    "text": "{topic} tips tricks beginners"
+   },
+   {
+    "a": "enter"
+   },
+   {
+    "a": "wait",
+    "ms": 2000
+   }
+  ],
+  "source": "imported",
+  "enabled": true,
+  "id": "skill_chrome_research_tab",
+  "ok": 0,
+  "fail": 0,
+  "uses": 0,
+  "streak_fail": 0,
+  "version": 1,
+  "broken": false
+ },
+ {
+  "name": "Chrome Read Article",
+  "desc": "Chrome mein kisi article ko Reader mode mein padhna",
+  "triggers": [
+   "chrome mein article padhna hai",
+   "reader mode on karo chrome mein",
+   "article properly padhna hai",
+   "distraction free reading mode karo",
+   "chrome reader view on karo"
+  ],
+  "params": [],
+  "steps": [
+   {
+    "a": "tap",
+    "sel": {
+     "desc": "More options"
+    }
+   },
+   {
+    "a": "wait",
+    "ms": 600
+   },
+   {
+    "a": "scroll",
+    "dir": "down"
+   },
+   {
+    "a": "tap",
+    "sel": {
+     "text": "Reader view"
+    }
+   },
+   {
+    "a": "wait",
+    "ms": 1000
+   }
+  ],
+  "source": "imported",
+  "enabled": true,
+  "id": "skill_chrome_read_article",
+  "ok": 0,
+  "fail": 0,
+  "uses": 0,
+  "streak_fail": 0,
+  "version": 1,
+  "broken": false
+ },
+ {
+  "name": "YouTube Upload Video",
+  "desc": "YouTube par naya video upload karo title aur description ke saath",
+  "triggers": [
+   "youtube pe video upload karo",
+   "youtube pe {title} upload karo",
+   "youtube pe naya video daalo {title}",
+   "video upload karo youtube mein {title}",
+   "youtube upload {title}"
+  ],
+  "params": [
+   "title"
+  ],
+  "steps": [
+   {
+    "a": "open",
+    "app": "YouTube"
+   },
+   {
+    "a": "wait",
+    "ms": 1500
+   },
+   {
+    "a": "tap",
+    "sel": {
+     "desc": "Create"
+    }
+   },
+   {
+    "a": "wait",
+    "ms": 700
+   },
+   {
+    "a": "tap",
+    "sel": {
+     "desc": "Upload a video"
+    }
+   },
+   {
+    "a": "wait",
+    "ms": 1000
+   },
+   {
+    "a": "ask",
+    "text": "Gallery se jo video upload karni hai wo select karo, phir 'Next' dabao. Ho jaye to batao."
+   },
+   {
+    "a": "wait",
+    "ms": 800
+   },
+   {
+    "a": "tap",
+    "sel": {
+     "desc": "Title (required)"
+    }
+   },
+   {
+    "a": "type",
+    "text": "{title}"
+   },
+   {
+    "a": "tap",
+    "sel": {
+     "desc": "Next"
+    }
+   },
+   {
+    "a": "wait",
+    "ms": 800
+   },
+   {
+    "a": "tap",
+    "sel": {
+     "desc": "Next"
+    }
+   },
+   {
+    "a": "wait",
+    "ms": 800
+   },
+   {
+    "a": "tap",
+    "sel": {
+     "desc": "Upload video"
+    },
+    "risk": "post"
+   },
+   {
+    "a": "wait",
+    "ms": 2000
+   }
+  ],
+  "source": "imported",
+  "enabled": true,
+  "id": "skill_youtube_upload_video",
+  "ok": 0,
+  "fail": 0,
+  "uses": 0,
+  "streak_fail": 0,
+  "version": 1,
+  "broken": false
+ },
+ {
+  "name": "YouTube Studio Analytics",
+  "desc": "YouTube Studio mein channel analytics aur views check karo",
+  "triggers": [
+   "youtube studio mein analytics dekhao",
+   "channel views check karo",
+   "youtube analytics batao",
+   "mera channel kaisa chal raha hai",
+   "youtube pe views kitne aaye"
+  ],
+  "params": [],
+  "steps": [
+   {
+    "a": "open",
+    "app": "YouTube Studio"
+   },
+   {
+    "a": "wait",
+    "ms": 2000
+   },
+   {
+    "a": "tap",
+    "sel": {
+     "desc": "Analytics"
+    }
+   },
+   {
+    "a": "wait",
+    "ms": 1500
+   }
+  ],
+  "source": "imported",
+  "enabled": true,
+  "id": "skill_youtube_studio_analytics",
+  "ok": 0,
+  "fail": 0,
+  "uses": 0,
+  "streak_fail": 0,
+  "version": 1,
+  "broken": false
+ },
+ {
+  "name": "Google Flow Video Generate",
+  "desc": "Google Flow (Veo) par AI video prompt se video generate karo",
+  "triggers": [
+   "google flow mein {prompt} video banao",
+   "flow pe {prompt} ka video generate karo",
+   "ai video banao {prompt}",
+   "google flow kholo aur {prompt} video banao",
+   "veo se {prompt} video create karo"
+  ],
+  "params": [
+   "prompt"
+  ],
+  "steps": [
+   {
+    "a": "url",
+    "url": "https://flow.google.com"
+   },
+   {
+    "a": "wait",
+    "ms": 3000
+   },
+   {
+    "a": "tap",
+    "sel": {
+     "desc": "Create"
+    }
+   },
+   {
+    "a": "wait",
+    "ms": 1000
+   },
+   {
+    "a": "tap",
+    "sel": {
+     "desc": "Describe your video"
+    }
+   },
+   {
+    "a": "type",
+    "text": "{prompt}, cinematic quality, 4K, professional lighting, smooth camera movement"
+   },
+   {
+    "a": "tap",
+    "sel": {
+     "desc": "Generate"
+    }
+   },
+   {
+    "a": "wait",
+    "ms": 5000
+   }
+  ],
+  "source": "imported",
+  "enabled": true,
+  "id": "skill_google_flow_video_generate",
+  "ok": 0,
+  "fail": 0,
+  "uses": 0,
+  "streak_fail": 0,
+  "version": 1,
+  "broken": false
+ },
+ {
+  "name": "Google Flow Enhance Prompt",
+  "desc": "Google Flow mein prompt ko AI se enhance karwao better video ke liye",
+  "triggers": [
+   "flow mein prompt better karo",
+   "google flow prompt enhance karo {idea}",
+   "{idea} ka better video prompt banao flow mein",
+   "flow pe {idea} ka enhanced prompt chahiye",
+   "video prompt improve karo {idea}"
+  ],
+  "params": [
+   "idea"
+  ],
+  "steps": [
+   {
+    "a": "url",
+    "url": "https://flow.google.com"
+   },
+   {
+    "a": "wait",
+    "ms": 3000
+   },
+   {
+    "a": "tap",
+    "sel": {
+     "desc": "Create"
+    }
+   },
+   {
+    "a": "wait",
+    "ms": 1000
+   },
+   {
+    "a": "tap",
+    "sel": {
+     "desc": "Describe your video"
+    }
+   },
+   {
+    "a": "type",
+    "text": "{idea}"
+   },
+   {
+    "a": "tap",
+    "sel": {
+     "desc": "Enhance prompt"
+    }
+   },
+   {
+    "a": "wait",
+    "ms": 3000
+   },
+   {
+    "a": "tap",
+    "sel": {
+     "desc": "Generate"
+    }
+   }
+  ],
+  "source": "imported",
+  "enabled": true,
+  "id": "skill_google_flow_enhance_prompt",
+  "ok": 0,
+  "fail": 0,
+  "uses": 0,
+  "streak_fail": 0,
+  "version": 1,
+  "broken": false
+ },
+ {
+  "name": "Canva Social Post",
+  "desc": "Canva mein Instagram ya YouTube thumbnail banao",
+  "triggers": [
+   "canva mein {type} design banao",
+   "thumbnail banao {type}",
+   "canva kholo {type} ke liye",
+   "{type} ka design canva mein banao",
+   "canva se {type} graphic banao"
+  ],
+  "params": [
+   "type"
+  ],
+  "steps": [
+   {
+    "a": "open",
+    "app": "Canva"
+   },
+   {
+    "a": "wait",
+    "ms": 2000
+   },
+   {
+    "a": "tap",
+    "sel": {
+     "desc": "Search designs and templates"
+    }
+   },
+   {
+    "a": "type",
+    "text": "{type}"
+   },
+   {
+    "a": "enter"
+   },
+   {
+    "a": "wait",
+    "ms": 1500
+   },
+   {
+    "a": "tap",
+    "sel": {
+     "desc": "See all"
+    }
+   },
+   {
+    "a": "wait",
+    "ms": 800
+   }
+  ],
+  "source": "imported",
+  "enabled": true,
+  "id": "skill_canva_social_post",
+  "ok": 0,
+  "fail": 0,
+  "uses": 0,
+  "streak_fail": 0,
+  "version": 1,
+  "broken": false
+ },
+ {
+  "name": "Copy ChatGPT Response",
+  "desc": "ChatGPT ka latest response clipboard mein copy karo",
+  "triggers": [
+   "chatgpt ka jawab copy karo",
+   "chatgpt response copy karo",
+   "ye response copy kar lo",
+   "chatgpt ka text copy karo",
+   "last message copy karo chatgpt se"
+  ],
+  "params": [],
+  "steps": [
+   {
+    "a": "long_press",
+    "sel": {
+     "desc": "Copy"
+    }
+   },
+   {
+    "a": "wait",
+    "ms": 600
+   },
+   {
+    "a": "tap",
+    "sel": {
+     "text": "Copy"
+    }
+   }
+  ],
+  "source": "imported",
+  "enabled": true,
+  "id": "skill_copy_chatgpt_response",
+  "ok": 0,
+  "fail": 0,
+  "uses": 0,
+  "streak_fail": 0,
+  "version": 1,
+  "broken": false
+ },
+ {
+  "name": "Chrome Copy Article Text",
+  "desc": "Chrome mein kisi article ka poora text copy karo aur ChatGPT mein paste karo",
+  "triggers": [
+   "chrome ka content chatgpt mein bhejo",
+   "article text chatgpt ko do",
+   "chrome se text copy karke chatgpt mein dalo",
+   "research chatgpt ko paste karo",
+   "article summarize karo chatgpt se"
+  ],
+  "params": [],
+  "steps": [
+   {
+    "a": "tap",
+    "sel": {
+     "desc": "More options"
+    }
+   },
+   {
+    "a": "wait",
+    "ms": 600
+   },
+   {
+    "a": "tap",
+    "sel": {
+     "text": "Share"
+    }
+   },
+   {
+    "a": "wait",
+    "ms": 800
+   },
+   {
+    "a": "tap",
+    "sel": {
+     "text": "Copy link"
+    }
+   },
+   {
+    "a": "wait",
+    "ms": 500
+   },
+   {
+    "a": "open",
+    "app": "ChatGPT"
+   },
+   {
+    "a": "wait",
+    "ms": 1200
+   },
+   {
+    "a": "tap",
+    "sel": {
+     "desc": "New chat"
+    }
+   },
+   {
+    "a": "tap",
+    "sel": {
+     "desc": "Message"
+    }
+   },
+   {
+    "a": "type",
+    "text": "Is URL par jo article hai uska summary do aur key points nikalo: "
+   },
+   {
+    "a": "ask",
+    "text": "Ab copied URL yahan paste karo (long press > paste), phir send karo. Ho jaye to batao."
+   }
+  ],
+  "source": "imported",
+  "enabled": true,
+  "id": "skill_chrome_copy_article_text",
+  "ok": 0,
+  "fail": 0,
+  "uses": 0,
+  "streak_fail": 0,
+  "version": 1,
+  "broken": false
+ },
+ {
+  "name": "Skill Self Improve",
+  "desc": "Kisi broken ya galat skill ko Gemini se dobara seekhwao aur improve karo",
+  "triggers": [
+   "{skill_name} skill theek karo",
+   "{skill_name} skill improve karo",
+   "{skill_name} wali skill dobara seekho",
+   "skill fix karo {skill_name}",
+   "{skill_name} skill ko better banao"
+  ],
+  "params": [
+   "skill_name"
+  ],
+  "steps": [
+   {
+    "a": "ask",
+    "text": "Skill '{skill_name}' ko improve karne ke liye: App kholo jahan ye kaam hota hai, phir manually wo kaam karo. NijAgent record karega aur naya skill bana dega. Tum 'Record' dabao Settings mein. Ho jaye to batao."
+   }
+  ],
+  "source": "imported",
+  "enabled": true,
+  "id": "skill_skill_self_improve",
+  "ok": 0,
+  "fail": 0,
+  "uses": 0,
+  "streak_fail": 0,
+  "version": 1,
+  "broken": false
+ },
+ {
+  "name": "YouTube Trending Research",
+  "desc": "YouTube par kisi topic ke trending videos research karo competitors dekhne ke liye",
+  "triggers": [
+   "youtube pe {topic} trending videos dikhao",
+   "{topic} par competitor videos dhundo",
+   "youtube mein {topic} trending kya hai",
+   "{topic} ke top youtube videos dikhao",
+   "youtube research karo {topic} par"
+  ],
+  "params": [
+   "topic"
+  ],
+  "steps": [
+   {
+    "a": "open",
+    "app": "YouTube"
+   },
+   {
+    "a": "wait",
+    "ms": 1200
+   },
+   {
+    "a": "tap",
+    "sel": {
+     "desc": "Search"
+    }
+   },
+   {
+    "a": "type",
+    "text": "{topic}"
+   },
+   {
+    "a": "enter"
+   },
+   {
+    "a": "wait",
+    "ms": 1500
+   },
+   {
+    "a": "tap",
+    "sel": {
+     "text": "Filters"
+    }
+   },
+   {
+    "a": "wait",
+    "ms": 700
+   },
+   {
+    "a": "tap",
+    "sel": {
+     "text": "This week"
+    }
+   },
+   {
+    "a": "wait",
+    "ms": 800
+   },
+   {
+    "a": "tap",
+    "sel": {
+     "text": "View count"
+    }
+   },
+   {
+    "a": "wait",
+    "ms": 1000
+   }
+  ],
+  "source": "imported",
+  "enabled": true,
+  "id": "skill_youtube_trending_research",
+  "ok": 0,
+  "fail": 0,
+  "uses": 0,
+  "streak_fail": 0,
+  "version": 1,
+  "broken": false
+ },
+ {
+  "name": "Full Content Pipeline",
+  "desc": "Puri content creation pipeline: script likho, video edit karo, upload karo — ek saath",
+  "triggers": [
+   "{topic} par poori content pipeline chalao",
+   "{topic} ka video shuru se ant tak banao",
+   "content workflow start karo {topic}",
+   "{topic} ke liye script se upload tak",
+   "complete video workflow {topic}"
+  ],
+  "params": [
+   "topic"
+  ],
+  "steps": [
+   {
+    "a": "open",
+    "app": "ChatGPT"
+   },
+   {
+    "a": "wait",
+    "ms": 1500
+   },
+   {
+    "a": "tap",
+    "sel": {
+     "desc": "New chat"
+    }
+   },
+   {
+    "a": "wait",
+    "ms": 800
+   },
+   {
+    "a": "tap",
+    "sel": {
+     "desc": "Message"
+    }
+   },
+   {
+    "a": "type",
+    "text": "{topic} par ek viral YouTube video ke liye: 1) 400 word script (Hinglish) 2) 5 catchy title options 3) SEO description 4) 10 hashtags — sab ek saath do."
+   },
+   {
+    "a": "enter"
+   },
+   {
+    "a": "wait",
+    "ms": 5000
+   },
+   {
+    "a": "ask",
+    "text": "ChatGPT ne script aur titles de diye. Ab script copy karo, CapCut mein jaake video edit karo. Video ready hone par 'Ho gaya' batao."
+   },
+   {
+    "a": "skill",
+    "name": "CapCut Export Video"
+   },
+   {
+    "a": "wait",
+    "ms": 2000
+   },
+   {
+    "a": "ask",
+    "text": "Video export ho gayi. Ab YouTube upload karna hai. Title aur description ready rakhna. 'Ho gaya' dabao."
+   },
+   {
+    "a": "open",
+    "app": "YouTube"
+   },
+   {
+    "a": "wait",
+    "ms": 1500
+   },
+   {
+    "a": "tap",
+    "sel": {
+     "desc": "Create"
+    }
+   },
+   {
+    "a": "tap",
+    "sel": {
+     "desc": "Upload a video"
+    }
+   }
+  ],
+  "source": "imported",
+  "enabled": true,
+  "id": "skill_full_content_pipeline",
+  "ok": 0,
+  "fail": 0,
+  "uses": 0,
+  "streak_fail": 0,
+  "version": 1,
+  "broken": false
  }
 ]
