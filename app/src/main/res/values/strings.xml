@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">NijAgent</string>
+    <string name="service_desc">NijAgent aapke kehne par apps ko tap, type aur scroll karta hai. Paise, bank aur post jaise kaam se pehle aapse poochta hai. Password, PIN aur OTP kabhi khud nahi bharta.</string>
+</resources>
