@@ -15,6 +15,7 @@ import android.speech.RecognitionListener;
 import android.speech.RecognizerIntent;
 import android.speech.SpeechRecognizer;
 import android.speech.tts.TextToSpeech;
+import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.JavascriptInterface;
 import android.webkit.ValueCallback;
@@ -46,6 +47,7 @@ public class MainActivity extends Activity implements AgentService.Listener {
     private boolean ttsReady = false;
     private boolean resumed = false;
     private String pendingDone = null;
+    private FrameLayout browserContainer;
 
     @Override
     protected void onCreate(Bundle b) {
@@ -82,6 +84,43 @@ public class MainActivity extends Activity implements AgentService.Listener {
         });
         web.addJavascriptInterface(new Bridge(), "NijAgent");
         web.loadUrl("file:///android_asset/ui.html");
+
+        // BrowserHub container (hidden overlay for in-app browser)
+        browserContainer = new FrameLayout(this);
+        browserContainer.setVisibility(View.GONE);
+        // Top toolbar with back + close
+        android.widget.LinearLayout bar = new android.widget.LinearLayout(this);
+        bar.setOrientation(android.widget.LinearLayout.HORIZONTAL);
+        bar.setBackgroundColor(0xFF151A24);
+        int pad = (int) (12 * getResources().getDisplayMetrics().density);
+        bar.setPadding(pad, pad, pad, pad);
+        android.widget.Button backBtn = new android.widget.Button(this);
+        backBtn.setText("‹ Back");
+        backBtn.setOnClickListener(new View.OnClickListener() {
+            @Override public void onClick(View v) { BrowserHub.get(MainActivity.this).goBack(); }
+        });
+        android.widget.Button closeBtn = new android.widget.Button(this);
+        closeBtn.setText("✕ Band karo");
+        closeBtn.setOnClickListener(new View.OnClickListener() {
+            @Override public void onClick(View v) {
+                BrowserHub b = BrowserHub.get(MainActivity.this);
+                b.shownInActivity = false;
+                b.detach();
+                browserContainer.setVisibility(View.GONE);
+            }
+        });
+        android.widget.LinearLayout.LayoutParams lp = new android.widget.LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT, 1f);
+        bar.addView(backBtn, lp);
+        bar.addView(closeBtn, lp);
+        browserContainer.addView(bar, new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+        // WebView holder below toolbar
+        FrameLayout webHolder = new FrameLayout(this);
+        webHolder.setId(View.generateViewId());
+        FrameLayout.LayoutParams hlp = new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+        hlp.topMargin = (int) (64 * getResources().getDisplayMetrics().density);
+        browserContainer.addView(webHolder, hlp);
+        browserContainer.setTag(webHolder);
+        root.addView(browserContainer, new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
 
         tts = new TextToSpeech(this, new TextToSpeech.OnInitListener() {
             @Override
@@ -318,8 +357,7 @@ public class MainActivity extends Activity implements AgentService.Listener {
         }
 
         @JavascriptInterface
-        public void chat(final String msg) {
-            AgentService s = AgentService.instance;
+        public void chat(final String msg) {            AgentService s = AgentService.instance;
             if (s == null) {
                 // Bina service ke bhi chat kar sakte hain (sirf AI se)
                 s = null;
@@ -359,6 +397,45 @@ public class MainActivity extends Activity implements AgentService.Listener {
                     }
                 }).start();
             }
+        }
+
+        // ---- BrowserHub (in-app browser)
+        @JavascriptInterface
+        public void browserOpen(final String url) {
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    BrowserHub b = BrowserHub.get(MainActivity.this);
+                    FrameLayout holder = (FrameLayout) browserContainer.getTag();
+                    b.attach(holder != null ? holder : browserContainer, MainActivity.this);
+                    browserContainer.setVisibility(View.VISIBLE);
+                    b.shownInActivity = true;
+                    b.load(url == null || url.length() == 0 ? "https://www.google.com" : url);
+                }
+            });
+        }
+
+        @JavascriptInterface
+        public void browserClose() {
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    BrowserHub b = BrowserHub.get(MainActivity.this);
+                    b.shownInActivity = false;
+                    b.detach();
+                    browserContainer.setVisibility(View.GONE);
+                }
+            });
+        }
+
+        @JavascriptInterface
+        public String browserState() {
+            return BrowserHub.get(MainActivity.this).stateJson();
+        }
+
+        @JavascriptInterface
+        public void browserGo(final String input) {
+            BrowserHub.get(MainActivity.this).load(input);
         }
 
         @JavascriptInterface
