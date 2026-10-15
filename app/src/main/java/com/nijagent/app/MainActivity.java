@@ -318,6 +318,50 @@ public class MainActivity extends Activity implements AgentService.Listener {
         }
 
         @JavascriptInterface
+        public void chat(final String msg) {
+            AgentService s = AgentService.instance;
+            if (s == null) {
+                // Bina service ke bhi chat kar sakte hain (sirf AI se)
+                s = null;
+            }
+            final AgentService svc = s;
+            if (svc != null) {
+                svc.chat(msg);
+            } else {
+                // Fallback: direct AI chat without service
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        try {
+                            String key = prefs.getString("gemini_key", "");
+                            String system = "You are NijAgent, a friendly phone AI assistant. Reply in Hinglish, short (2-3 lines).";
+                            String reply;
+                            if (key.length() > 10) {
+                                try { reply = com.nijagent.app.GeminiClient.call(key, com.nijagent.app.GeminiClient.DEFAULT_MODEL, system, msg, null); }
+                                catch (Exception e) { reply = com.nijagent.app.FreeAiClient.callPollinations(system, msg); }
+                            } else {
+                                reply = com.nijagent.app.FreeAiClient.callPollinations(system, msg);
+                            }
+                            final String r = reply;
+                            runOnUiThread(new Runnable() {
+                                @Override public void run() {
+                                    js("window.onAgentResult&&onAgentResult(" + q(r) + ")");
+                                }
+                            });
+                        } catch (Exception e) {
+                            final String err = "Jawab nahi de paya: " + e.getMessage();
+                            runOnUiThread(new Runnable() {
+                                @Override public void run() {
+                                    js("window.onAgentResult&&onAgentResult(" + q(err) + ")");
+                                }
+                            });
+                        }
+                    }
+                }).start();
+            }
+        }
+
+        @JavascriptInterface
         public void sendCommandDelayed(final String cmd, final int secs) {
             AgentService s = AgentService.instance;
             if (s == null) {
