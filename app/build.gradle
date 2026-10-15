@@ -10,8 +10,8 @@ android {
         applicationId 'com.nijagent.app'
         minSdk 24
         targetSdk 34
-        versionCode 13
-        versionName '7.6'
+        versionCode 14
+        versionName '7.7'
     }
 
     // Fixed signing key: har naya APK purane ke upar install ho jata hai (data + skills bache rehte hain).
