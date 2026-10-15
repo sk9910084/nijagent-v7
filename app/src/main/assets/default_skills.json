@@ -1,1 +1,1152 @@
-[{"broken":false,"desc":"YouTube Studio app kholta hai analytics dekhne ke liye","enabled":true,"fail":0,"id":"skill_yt_studio","name":"YouTube Studio Kholo","ok":0,"params":[],"source":"imported","steps":[{"a":"open","app":"YouTube Studio"}],"streak_fail":0,"triggers":["youtube studio kholo","analytics dekho","channel analytics dekho"],"uses":0,"version":1},{"broken":false,"desc":"YouTube par video search karke pehla video chalata hai","enabled":true,"fail":0,"id":"skill_yt_play","name":"YouTube Par Chalao","ok":0,"params":["query"],"source":"imported","steps":[{"a":"open","app":"YouTube"},{"a":"wait","ms":2000},{"a":"tap","sel":{"text":"Search"}},{"a":"wait","ms":1000},{"a":"type","text":"{query}"},{"a":"enter"},{"a":"wait","ms":2000}],"streak_fail":0,"triggers":["youtube par {query} chalao","{query} video dekho"],"uses":0,"version":1},{"broken":false,"desc":"Facebook app kholta hai post karne ke liye","enabled":true,"fail":0,"id":"skill_fb_open","name":"Facebook Kholo","ok":0,"params":[],"source":"imported","steps":[{"a":"open","app":"Facebook"}],"streak_fail":0,"triggers":["facebook kholo","fb kholo","facebook par jao"],"uses":0,"version":1},{"broken":false,"desc":"WhatsApp kholkar chat list dikhata hai","enabled":true,"fail":0,"id":"skill_wa_open","name":"WhatsApp Kholo","ok":0,"params":[],"source":"imported","steps":[{"a":"open","app":"WhatsApp"},{"a":"wait","ms":1500}],"streak_fail":0,"triggers":["whatsapp kholo","whatsapp open karo"],"uses":0,"version":1},{"broken":false,"desc":"Play Store me app search karta hai","enabled":true,"fail":0,"id":"skill_ps_search","name":"App Search Karo","ok":0,"params":["query"],"source":"imported","steps":[{"a":"open","app":"Play Store"},{"a":"wait","ms":2000},{"a":"tap","sel":{"text":"Search"}},{"a":"wait","ms":1000},{"a":"type","text":"{query}"},{"a":"enter"}],"streak_fail":0,"triggers":["{query} app search karo","play store me {query} dekho"],"uses":0,"version":1},{"broken":false,"desc":"Google Maps me jagah search karta hai","enabled":true,"fail":0,"id":"skill_maps_nav","name":"Rasta Dekho","ok":0,"params":["query"],"source":"imported","steps":[{"a":"open","app":"Maps"},{"a":"wait","ms":2000},{"a":"tap","sel":{"text":"Search here"}},{"a":"wait","ms":1000},{"a":"type","text":"{query}"},{"a":"enter"}],"streak_fail":0,"triggers":["{query} ka rasta dikhao","maps me {query} dekho"],"uses":0,"version":1},{"broken":false,"desc":"Gmail app kholta hai","enabled":true,"fail":0,"id":"skill_gmail_open","name":"Gmail Kholo","ok":0,"params":[],"source":"imported","steps":[{"a":"open","app":"Gmail"},{"a":"wait","ms":1500}],"streak_fail":0,"triggers":["gmail kholo","email dekho","mail check karo"],"uses":0,"version":1},{"broken":false,"desc":"Chrome me website kholta hai","enabled":true,"fail":0,"id":"skill_web_open","name":"Website Kholo","ok":0,"params":["url"],"source":"imported","steps":[{"a":"url","url":"{url}"}],"streak_fail":0,"triggers":["{url} kholo","website dekho {url}"],"uses":0,"version":1},{"broken":false,"desc":"Google par search karta hai","enabled":true,"fail":0,"id":"skill_g_search","name":"Google Search","ok":0,"params":["query"],"source":"imported","steps":[{"a":"url","url":"https://www.google.com/search?q={query}"}],"streak_fail":0,"triggers":["google par {query} search karo","{query} ke baare me batao"],"uses":0,"version":1},{"broken":false,"desc":"Phone ko home screen par le jata hai","enabled":true,"fail":0,"id":"skill_go_home","name":"Home Jao","ok":0,"params":[],"source":"imported","steps":[{"a":"home"}],"streak_fail":0,"triggers":["home jao","wapas jao home par"],"uses":0,"version":1}]
+[
+ {
+  "broken": false,
+  "desc": "YouTube Studio app kholta hai analytics dekhne ke liye",
+  "enabled": true,
+  "fail": 0,
+  "id": "skill_yt_studio",
+  "name": "YouTube Studio Kholo",
+  "ok": 0,
+  "params": [],
+  "source": "imported",
+  "steps": [
+   {
+    "a": "open",
+    "app": "YouTube Studio"
+   }
+  ],
+  "streak_fail": 0,
+  "triggers": [
+   "youtube studio kholo",
+   "analytics dekho",
+   "channel analytics dekho"
+  ],
+  "uses": 0,
+  "version": 1
+ },
+ {
+  "broken": false,
+  "desc": "YouTube par video search karke pehla video chalata hai",
+  "enabled": true,
+  "fail": 0,
+  "id": "skill_yt_play",
+  "name": "YouTube Par Chalao",
+  "ok": 0,
+  "params": [
+   "query"
+  ],
+  "source": "imported",
+  "steps": [
+   {
+    "a": "open",
+    "app": "YouTube"
+   },
+   {
+    "a": "wait",
+    "ms": 2000
+   },
+   {
+    "a": "tap",
+    "sel": {
+     "text": "Search"
+    }
+   },
+   {
+    "a": "wait",
+    "ms": 1000
+   },
+   {
+    "a": "type",
+    "text": "{query}"
+   },
+   {
+    "a": "enter"
+   },
+   {
+    "a": "wait",
+    "ms": 2000
+   }
+  ],
+  "streak_fail": 0,
+  "triggers": [
+   "youtube par {query} chalao",
+   "{query} video dekho"
+  ],
+  "uses": 0,
+  "version": 1
+ },
+ {
+  "broken": false,
+  "desc": "Facebook app kholta hai post karne ke liye",
+  "enabled": true,
+  "fail": 0,
+  "id": "skill_fb_open",
+  "name": "Facebook Kholo",
+  "ok": 0,
+  "params": [],
+  "source": "imported",
+  "steps": [
+   {
+    "a": "open",
+    "app": "Facebook"
+   }
+  ],
+  "streak_fail": 0,
+  "triggers": [
+   "facebook kholo",
+   "fb kholo",
+   "facebook par jao"
+  ],
+  "uses": 0,
+  "version": 1
+ },
+ {
+  "broken": false,
+  "desc": "WhatsApp kholkar chat list dikhata hai",
+  "enabled": true,
+  "fail": 0,
+  "id": "skill_wa_open",
+  "name": "WhatsApp Kholo",
+  "ok": 0,
+  "params": [],
+  "source": "imported",
+  "steps": [
+   {
+    "a": "open",
+    "app": "WhatsApp"
+   },
+   {
+    "a": "wait",
+    "ms": 1500
+   }
+  ],
+  "streak_fail": 0,
+  "triggers": [
+   "whatsapp kholo",
+   "whatsapp open karo"
+  ],
+  "uses": 0,
+  "version": 1
+ },
+ {
+  "broken": false,
+  "desc": "Play Store me app search karta hai",
+  "enabled": true,
+  "fail": 0,
+  "id": "skill_ps_search",
+  "name": "App Search Karo",
+  "ok": 0,
+  "params": [
+   "query"
+  ],
+  "source": "imported",
+  "steps": [
+   {
+    "a": "open",
+    "app": "Play Store"
+   },
+   {
+    "a": "wait",
+    "ms": 2000
+   },
+   {
+    "a": "tap",
+    "sel": {
+     "text": "Search"
+    }
+   },
+   {
+    "a": "wait",
+    "ms": 1000
+   },
+   {
+    "a": "type",
+    "text": "{query}"
+   },
+   {
+    "a": "enter"
+   }
+  ],
+  "streak_fail": 0,
+  "triggers": [
+   "{query} app search karo",
+   "play store me {query} dekho"
+  ],
+  "uses": 0,
+  "version": 1
+ },
+ {
+  "broken": false,
+  "desc": "Google Maps me jagah search karta hai",
+  "enabled": true,
+  "fail": 0,
+  "id": "skill_maps_nav",
+  "name": "Rasta Dekho",
+  "ok": 0,
+  "params": [
+   "query"
+  ],
+  "source": "imported",
+  "steps": [
+   {
+    "a": "open",
+    "app": "Maps"
+   },
+   {
+    "a": "wait",
+    "ms": 2000
+   },
+   {
+    "a": "tap",
+    "sel": {
+     "text": "Search here"
+    }
+   },
+   {
+    "a": "wait",
+    "ms": 1000
+   },
+   {
+    "a": "type",
+    "text": "{query}"
+   },
+   {
+    "a": "enter"
+   }
+  ],
+  "streak_fail": 0,
+  "triggers": [
+   "{query} ka rasta dikhao",
+   "maps me {query} dekho"
+  ],
+  "uses": 0,
+  "version": 1
+ },
+ {
+  "broken": false,
+  "desc": "Gmail app kholta hai",
+  "enabled": true,
+  "fail": 0,
+  "id": "skill_gmail_open",
+  "name": "Gmail Kholo",
+  "ok": 0,
+  "params": [],
+  "source": "imported",
+  "steps": [
+   {
+    "a": "open",
+    "app": "Gmail"
+   },
+   {
+    "a": "wait",
+    "ms": 1500
+   }
+  ],
+  "streak_fail": 0,
+  "triggers": [
+   "gmail kholo",
+   "email dekho",
+   "mail check karo"
+  ],
+  "uses": 0,
+  "version": 1
+ },
+ {
+  "broken": false,
+  "desc": "Chrome me website kholta hai",
+  "enabled": true,
+  "fail": 0,
+  "id": "skill_web_open",
+  "name": "Website Kholo",
+  "ok": 0,
+  "params": [
+   "url"
+  ],
+  "source": "imported",
+  "steps": [
+   {
+    "a": "url",
+    "url": "{url}"
+   }
+  ],
+  "streak_fail": 0,
+  "triggers": [
+   "{url} kholo",
+   "website dekho {url}"
+  ],
+  "uses": 0,
+  "version": 1
+ },
+ {
+  "broken": false,
+  "desc": "Google par search karta hai",
+  "enabled": true,
+  "fail": 0,
+  "id": "skill_g_search",
+  "name": "Google Search",
+  "ok": 0,
+  "params": [
+   "query"
+  ],
+  "source": "imported",
+  "steps": [
+   {
+    "a": "url",
+    "url": "https://www.google.com/search?q={query}"
+   }
+  ],
+  "streak_fail": 0,
+  "triggers": [
+   "google par {query} search karo",
+   "{query} ke baare me batao"
+  ],
+  "uses": 0,
+  "version": 1
+ },
+ {
+  "broken": false,
+  "desc": "Phone ko home screen par le jata hai",
+  "enabled": true,
+  "fail": 0,
+  "id": "skill_go_home",
+  "name": "Home Jao",
+  "ok": 0,
+  "params": [],
+  "source": "imported",
+  "steps": [
+   {
+    "a": "home"
+   }
+  ],
+  "streak_fail": 0,
+  "triggers": [
+   "home jao",
+   "wapas jao home par"
+  ],
+  "uses": 0,
+  "version": 1
+ },
+ {
+  "name": "YouTube Search",
+  "desc": "YouTube par koi bhi video search karo",
+  "triggers": [
+   "youtube pe {query} search karo",
+   "youtube pe {query} chalao",
+   "youtube pe {query} dekhna hai",
+   "{query} youtube pe dikhao",
+   "youtube kholo aur {query} search karo"
+  ],
+  "params": [
+   "query"
+  ],
+  "steps": [
+   {
+    "a": "open",
+    "app": "YouTube"
+   },
+   {
+    "a": "tap",
+    "sel": {
+     "desc": "Search"
+    }
+   },
+   {
+    "a": "type",
+    "text": "{query}"
+   },
+   {
+    "a": "enter"
+   }
+  ],
+  "source": "imported",
+  "enabled": true,
+  "id": "skill_youtube_search",
+  "ok": 0,
+  "fail": 0,
+  "uses": 0,
+  "streak_fail": 0,
+  "version": 1,
+  "broken": false
+ },
+ {
+  "name": "WhatsApp Message",
+  "desc": "Kisi bhi WhatsApp contact ko message bhejo",
+  "triggers": [
+   "whatsapp pe {contact} ko message karo {message}",
+   "{contact} ko whatsapp karo {message}",
+   "whatsapp pe {contact} ko {message} bhejo",
+   "{contact} ko message bhejo {message}"
+  ],
+  "params": [
+   "contact",
+   "message"
+  ],
+  "steps": [
+   {
+    "a": "open",
+    "app": "WhatsApp"
+   },
+   {
+    "a": "tap",
+    "sel": {
+     "desc": "Search"
+    }
+   },
+   {
+    "a": "type",
+    "text": "{contact}"
+   },
+   {
+    "a": "wait",
+    "ms": 1200
+   },
+   {
+    "a": "tap",
+    "sel": {
+     "text": "{contact}"
+    }
+   },
+   {
+    "a": "tap",
+    "sel": {
+     "desc": "Message",
+     "n": 1
+    }
+   },
+   {
+    "a": "type",
+    "text": "{message}"
+   },
+   {
+    "a": "tap",
+    "sel": {
+     "desc": "Send"
+    }
+   }
+  ],
+  "source": "imported",
+  "enabled": true,
+  "id": "skill_whatsapp_message",
+  "ok": 0,
+  "fail": 0,
+  "uses": 0,
+  "streak_fail": 0,
+  "version": 1,
+  "broken": false
+ },
+ {
+  "name": "Google Maps Navigate",
+  "desc": "Google Maps mein koi jagah navigate karo",
+  "triggers": [
+   "{place} ka rasta batao",
+   "{place} kaise jaayein",
+   "maps mein {place} navigate karo",
+   "{place} navigate karo",
+   "google maps pe {place} dikhao"
+  ],
+  "params": [
+   "place"
+  ],
+  "steps": [
+   {
+    "a": "open",
+    "app": "Maps"
+   },
+   {
+    "a": "tap",
+    "sel": {
+     "desc": "Search here"
+    }
+   },
+   {
+    "a": "type",
+    "text": "{place}"
+   },
+   {
+    "a": "enter"
+   },
+   {
+    "a": "wait",
+    "ms": 1500
+   },
+   {
+    "a": "tap",
+    "sel": {
+     "desc": "Directions"
+    }
+   }
+  ],
+  "source": "imported",
+  "enabled": true,
+  "id": "skill_google_maps_navigate",
+  "ok": 0,
+  "fail": 0,
+  "uses": 0,
+  "streak_fail": 0,
+  "version": 1,
+  "broken": false
+ },
+ {
+  "name": "Flashlight Toggle",
+  "desc": "Phone ki torch on/off karo",
+  "triggers": [
+   "torch on karo",
+   "flashlight on karo",
+   "torch chalao",
+   "andhera hai torch on karo",
+   "torch on",
+   "flashlight on"
+  ],
+  "params": [],
+  "steps": [
+   {
+    "a": "swipe",
+    "fx": 0.5,
+    "fy": 0.95,
+    "fx2": 0.5,
+    "fy2": 0.3
+   },
+   {
+    "a": "wait",
+    "ms": 600
+   },
+   {
+    "a": "tap",
+    "sel": {
+     "desc": "Flashlight"
+    }
+   }
+  ],
+  "source": "imported",
+  "enabled": true,
+  "id": "skill_flashlight_toggle",
+  "ok": 0,
+  "fail": 0,
+  "uses": 0,
+  "streak_fail": 0,
+  "version": 1,
+  "broken": false
+ },
+ {
+  "name": "Flashlight Off",
+  "desc": "Phone ki torch band karo",
+  "triggers": [
+   "torch off karo",
+   "flashlight off karo",
+   "torch band karo",
+   "torch off",
+   "flashlight off"
+  ],
+  "params": [],
+  "steps": [
+   {
+    "a": "swipe",
+    "fx": 0.5,
+    "fy": 0.95,
+    "fx2": 0.5,
+    "fy2": 0.3
+   },
+   {
+    "a": "wait",
+    "ms": 600
+   },
+   {
+    "a": "tap",
+    "sel": {
+     "desc": "Flashlight"
+    }
+   }
+  ],
+  "source": "imported",
+  "enabled": true,
+  "id": "skill_flashlight_off",
+  "ok": 0,
+  "fail": 0,
+  "uses": 0,
+  "streak_fail": 0,
+  "version": 1,
+  "broken": false
+ },
+ {
+  "name": "WiFi Toggle Off",
+  "desc": "WiFi band karo battery bachao",
+  "triggers": [
+   "wifi off karo",
+   "wifi band karo",
+   "wifi off",
+   "internet off karo",
+   "wifi disconnect karo"
+  ],
+  "params": [],
+  "steps": [
+   {
+    "a": "swipe",
+    "fx": 0.5,
+    "fy": 0.95,
+    "fx2": 0.5,
+    "fy2": 0.3
+   },
+   {
+    "a": "wait",
+    "ms": 600
+   },
+   {
+    "a": "tap",
+    "sel": {
+     "desc": "Wi-Fi"
+    }
+   }
+  ],
+  "source": "imported",
+  "enabled": true,
+  "id": "skill_wifi_toggle_off",
+  "ok": 0,
+  "fail": 0,
+  "uses": 0,
+  "streak_fail": 0,
+  "version": 1,
+  "broken": false
+ },
+ {
+  "name": "WiFi Toggle On",
+  "desc": "WiFi on karo",
+  "triggers": [
+   "wifi on karo",
+   "wifi chalao",
+   "wifi on",
+   "internet on karo",
+   "wifi connect karo"
+  ],
+  "params": [],
+  "steps": [
+   {
+    "a": "swipe",
+    "fx": 0.5,
+    "fy": 0.95,
+    "fx2": 0.5,
+    "fy2": 0.3
+   },
+   {
+    "a": "wait",
+    "ms": 600
+   },
+   {
+    "a": "tap",
+    "sel": {
+     "desc": "Wi-Fi"
+    }
+   }
+  ],
+  "source": "imported",
+  "enabled": true,
+  "id": "skill_wifi_toggle_on",
+  "ok": 0,
+  "fail": 0,
+  "uses": 0,
+  "streak_fail": 0,
+  "version": 1,
+  "broken": false
+ },
+ {
+  "name": "Phone Call",
+  "desc": "Kisi bhi number ya contact ko call karo",
+  "triggers": [
+   "{contact} ko call karo",
+   "{contact} ko phone karo",
+   "{contact} call karo",
+   "{contact} ko ring karo",
+   "dial karo {contact}"
+  ],
+  "params": [
+   "contact"
+  ],
+  "steps": [
+   {
+    "a": "open",
+    "app": "Phone"
+   },
+   {
+    "a": "tap",
+    "sel": {
+     "desc": "Search"
+    }
+   },
+   {
+    "a": "type",
+    "text": "{contact}"
+   },
+   {
+    "a": "wait",
+    "ms": 1000
+   },
+   {
+    "a": "tap",
+    "sel": {
+     "desc": "Call"
+    }
+   }
+  ],
+  "source": "imported",
+  "enabled": true,
+  "id": "skill_phone_call",
+  "ok": 0,
+  "fail": 0,
+  "uses": 0,
+  "streak_fail": 0,
+  "version": 1,
+  "broken": false
+ },
+ {
+  "name": "Take Screenshot",
+  "desc": "Phone ka screenshot lo",
+  "triggers": [
+   "screenshot lo",
+   "screen capture karo",
+   "screenshot lena hai",
+   "screen shot lo",
+   "capture karo screen"
+  ],
+  "params": [],
+  "steps": [
+   {
+    "a": "swipe",
+    "fx": 0.5,
+    "fy": 0.95,
+    "fx2": 0.5,
+    "fy2": 0.3
+   },
+   {
+    "a": "wait",
+    "ms": 500
+   },
+   {
+    "a": "tap",
+    "sel": {
+     "desc": "Screenshot"
+    }
+   }
+  ],
+  "source": "imported",
+  "enabled": true,
+  "id": "skill_take_screenshot",
+  "ok": 0,
+  "fail": 0,
+  "uses": 0,
+  "streak_fail": 0,
+  "version": 1,
+  "broken": false
+ },
+ {
+  "name": "Open Settings",
+  "desc": "Phone ki settings kholna",
+  "triggers": [
+   "settings kholo",
+   "settings open karo",
+   "phone ki settings dikhao",
+   "settings mein jao",
+   "setting kholo"
+  ],
+  "params": [],
+  "steps": [
+   {
+    "a": "open",
+    "app": "Settings"
+   }
+  ],
+  "source": "imported",
+  "enabled": true,
+  "id": "skill_open_settings",
+  "ok": 0,
+  "fail": 0,
+  "uses": 0,
+  "streak_fail": 0,
+  "version": 1,
+  "broken": false
+ },
+ {
+  "name": "Brightness Up",
+  "desc": "Screen ki brightness badhao",
+  "triggers": [
+   "brightness badhao",
+   "screen roshan karo",
+   "brightness zyada karo",
+   "light badhao screen ki",
+   "display bright karo"
+  ],
+  "params": [],
+  "steps": [
+   {
+    "a": "open",
+    "app": "Settings"
+   },
+   {
+    "a": "tap",
+    "sel": {
+     "text": "Display"
+    }
+   },
+   {
+    "a": "tap",
+    "sel": {
+     "text": "Brightness level"
+    }
+   },
+   {
+    "a": "swipe",
+    "fx": 0.2,
+    "fy": 0.5,
+    "fx2": 0.9,
+    "fy2": 0.5
+   }
+  ],
+  "source": "imported",
+  "enabled": true,
+  "id": "skill_brightness_up",
+  "ok": 0,
+  "fail": 0,
+  "uses": 0,
+  "streak_fail": 0,
+  "version": 1,
+  "broken": false
+ },
+ {
+  "name": "Brightness Down",
+  "desc": "Screen ki brightness kam karo",
+  "triggers": [
+   "brightness kam karo",
+   "screen dim karo",
+   "brightness thodi kam karo",
+   "aankhein jal rahi hain brightness kam karo",
+   "display dim karo"
+  ],
+  "params": [],
+  "steps": [
+   {
+    "a": "open",
+    "app": "Settings"
+   },
+   {
+    "a": "tap",
+    "sel": {
+     "text": "Display"
+    }
+   },
+   {
+    "a": "tap",
+    "sel": {
+     "text": "Brightness level"
+    }
+   },
+   {
+    "a": "swipe",
+    "fx": 0.9,
+    "fy": 0.5,
+    "fx2": 0.2,
+    "fy2": 0.5
+   }
+  ],
+  "source": "imported",
+  "enabled": true,
+  "id": "skill_brightness_down",
+  "ok": 0,
+  "fail": 0,
+  "uses": 0,
+  "streak_fail": 0,
+  "version": 1,
+  "broken": false
+ },
+ {
+  "name": "Alarm Set",
+  "desc": "Ghadi mein alarm set karo",
+  "triggers": [
+   "{time} ka alarm lagao",
+   "{time} baje ka alarm set karo",
+   "alarm set karo {time}",
+   "{time} pe alarm lagao",
+   "subah {time} ka alarm"
+  ],
+  "params": [
+   "time"
+  ],
+  "steps": [
+   {
+    "a": "open",
+    "app": "Clock"
+   },
+   {
+    "a": "tap",
+    "sel": {
+     "desc": "Alarm"
+    }
+   },
+   {
+    "a": "tap",
+    "sel": {
+     "desc": "Add alarm"
+    }
+   },
+   {
+    "a": "ask",
+    "text": "Alarm ka samay ''{time}'' set karo aur OK dabao, phir mujhe batao"
+   }
+  ],
+  "source": "imported",
+  "enabled": true,
+  "id": "skill_alarm_set",
+  "ok": 0,
+  "fail": 0,
+  "uses": 0,
+  "streak_fail": 0,
+  "version": 1,
+  "broken": false
+ },
+ {
+  "name": "Spotify Play",
+  "desc": "Spotify par gaana sunao",
+  "triggers": [
+   "spotify pe {song} chalao",
+   "{song} spotify pe sunao",
+   "spotify mein {song} lagao",
+   "gaana sunao {song}",
+   "spotify chalao {song}"
+  ],
+  "params": [
+   "song"
+  ],
+  "steps": [
+   {
+    "a": "open",
+    "app": "Spotify"
+   },
+   {
+    "a": "tap",
+    "sel": {
+     "desc": "Search"
+    }
+   },
+   {
+    "a": "type",
+    "text": "{song}"
+   },
+   {
+    "a": "enter"
+   },
+   {
+    "a": "wait",
+    "ms": 1200
+   },
+   {
+    "a": "tap",
+    "sel": {
+     "desc": "Play"
+    }
+   }
+  ],
+  "source": "imported",
+  "enabled": true,
+  "id": "skill_spotify_play",
+  "ok": 0,
+  "fail": 0,
+  "uses": 0,
+  "streak_fail": 0,
+  "version": 1,
+  "broken": false
+ },
+ {
+  "name": "Camera Open",
+  "desc": "Camera seedha kholna",
+  "triggers": [
+   "camera kholo",
+   "photo lena hai",
+   "camera on karo",
+   "selfie leni hai",
+   "camera open karo"
+  ],
+  "params": [],
+  "steps": [
+   {
+    "a": "open",
+    "app": "Camera"
+   }
+  ],
+  "source": "imported",
+  "enabled": true,
+  "id": "skill_camera_open",
+  "ok": 0,
+  "fail": 0,
+  "uses": 0,
+  "streak_fail": 0,
+  "version": 1,
+  "broken": false
+ },
+ {
+  "name": "Battery Status",
+  "desc": "Battery percentage aur status dekhna",
+  "triggers": [
+   "battery kitni hai",
+   "battery check karo",
+   "phone mein kitna charge hai",
+   "battery status batao",
+   "charge kitna bacha hai"
+  ],
+  "params": [],
+  "steps": [
+   {
+    "a": "open",
+    "app": "Settings"
+   },
+   {
+    "a": "tap",
+    "sel": {
+     "text": "Battery"
+    }
+   }
+  ],
+  "source": "imported",
+  "enabled": true,
+  "id": "skill_battery_status",
+  "ok": 0,
+  "fail": 0,
+  "uses": 0,
+  "streak_fail": 0,
+  "version": 1,
+  "broken": false
+ },
+ {
+  "name": "Silent Mode",
+  "desc": "Phone ko silent mode mein dalo",
+  "triggers": [
+   "phone silent karo",
+   "silent mode on karo",
+   "ringtone band karo",
+   "phone mute karo",
+   "silent pe dalo"
+  ],
+  "params": [],
+  "steps": [
+   {
+    "a": "swipe",
+    "fx": 0.5,
+    "fy": 0.95,
+    "fx2": 0.5,
+    "fy2": 0.3
+   },
+   {
+    "a": "wait",
+    "ms": 600
+   },
+   {
+    "a": "tap",
+    "sel": {
+     "desc": "Ring"
+    }
+   }
+  ],
+  "source": "imported",
+  "enabled": true,
+  "id": "skill_silent_mode",
+  "ok": 0,
+  "fail": 0,
+  "uses": 0,
+  "streak_fail": 0,
+  "version": 1,
+  "broken": false
+ },
+ {
+  "name": "Instagram Open Profile",
+  "desc": "Instagram par kisi ka profile dekhna",
+  "triggers": [
+   "instagram pe {username} ka profile dekhao",
+   "{username} ka instagram profile kholo",
+   "instagram mein {username} dhundo",
+   "instagram pe {username} search karo"
+  ],
+  "params": [
+   "username"
+  ],
+  "steps": [
+   {
+    "a": "open",
+    "app": "Instagram"
+   },
+   {
+    "a": "tap",
+    "sel": {
+     "desc": "Search and Explore"
+    }
+   },
+   {
+    "a": "tap",
+    "sel": {
+     "desc": "Search"
+    }
+   },
+   {
+    "a": "type",
+    "text": "{username}"
+   },
+   {
+    "a": "wait",
+    "ms": 1200
+   },
+   {
+    "a": "tap",
+    "sel": {
+     "text": "{username}"
+    }
+   }
+  ],
+  "source": "imported",
+  "enabled": true,
+  "id": "skill_instagram_open_profile",
+  "ok": 0,
+  "fail": 0,
+  "uses": 0,
+  "streak_fail": 0,
+  "version": 1,
+  "broken": false
+ },
+ {
+  "name": "Clear Recent Apps",
+  "desc": "Saare recent apps band karo aur RAM free karo",
+  "triggers": [
+   "recent apps band karo",
+   "saare apps band karo",
+   "ram free karo",
+   "background apps hatao",
+   "phone free karo apps se"
+  ],
+  "params": [],
+  "steps": [
+   {
+    "a": "recents"
+   },
+   {
+    "a": "wait",
+    "ms": 800
+   },
+   {
+    "a": "tap",
+    "sel": {
+     "desc": "Clear all"
+    }
+   },
+   {
+    "a": "wait",
+    "ms": 500
+   },
+   {
+    "a": "home"
+   }
+  ],
+  "source": "imported",
+  "enabled": true,
+  "id": "skill_clear_recent_apps",
+  "ok": 0,
+  "fail": 0,
+  "uses": 0,
+  "streak_fail": 0,
+  "version": 1,
+  "broken": false
+ }
+]
