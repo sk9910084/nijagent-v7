@@ -610,7 +610,29 @@ public class AgentService extends AccessibilityService {
         String key = prefs.getString("gemini_key", "");
         String model = prefs.getString("gemini_model", GeminiClient.DEFAULT_MODEL);
         prefs.edit().putInt("api_calls", prefs.getInt("api_calls", 0) + 1).apply();
-        return GeminiClient.call(key, model, system, user, shot);
+        // 1. Gemini (primary)
+        try {
+            return GeminiClient.call(key, model, system, user, shot);
+        } catch (java.io.IOException ge) {
+            // 2. Groq fallback (free key, agar di hai)
+            String groqKey = prefs.getString("groq_key", "");
+            if (groqKey.length() > 10 && shot == null) {
+                try {
+                    postResult("Gemini fail, Groq try kar raha hu…");
+                    return FreeAiClient.callGroq(groqKey, system, user);
+                } catch (java.io.IOException ignored) {}
+            }
+            // 3. Pollinations fallback (bina key, bina screenshot)
+            if (shot == null) {
+                try {
+                    postResult("Groq fail, Pollinations try kar raha hu…");
+                    return FreeAiClient.callPollinations(system, user);
+                } catch (java.io.IOException pe) {
+                    throw new java.io.IOException("Teeno AI fail: " + ge.getMessage());
+                }
+            }
+            throw ge;
+        }
     }
 
     private boolean geminiReady() {
