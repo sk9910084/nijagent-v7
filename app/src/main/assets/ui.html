@@ -1004,6 +1004,7 @@ var TOOLS = [
   { e: '📷', t: 'Camera', s: 'App kholo', c: 'phone', f: function () { runTask('kholo camera'); } },
   { e: '🖼', t: 'Gallery', s: 'App kholo', c: 'phone', f: function () { runTask('kholo gallery'); } },
   { e: '🌐', t: 'Browser', s: 'Chrome kholo', c: 'phone', f: function () { runTask('kholo chrome'); } },
+  { e: '🦊', t: 'Web Browser', s: 'Andar ka browser', c: 'phone', f: function () { openBrowserHub(); } },
   { e: '🈯', t: 'Translator', s: 'Screen ka matlab', c: 'ai', f: function () { readScreenFlow('Is screen ka Hindi me matlab batao'); } },
   { e: '📝', t: 'Notes', s: 'Screen summarize', c: 'ai', f: function () { readScreenFlow('Is screen ka chhota summary banao'); } },
   { e: '📍', t: 'Location', s: 'Maps kholo', c: 'phone', f: function () { runTask('kholo maps'); } },
@@ -1018,6 +1019,19 @@ function filterTools(c, btn) {
 function renderTools() {
   $('tools-grid').innerHTML = TOOLS.map(function (t, i) { return { t: t, i: i }; }).filter(function (x) { return toolFilter === 'all' || x.t.c === toolFilter; })
     .map(function (x) { return '<button class="tcard" onclick="TOOLS[' + x.i + '].f()"><div class="te">' + x.t.e + '</div><div class="tt">' + esc(x.t.t) + '</div><div class="ts">' + esc(x.t.s) + '</div></button>'; }).join('');
+}
+
+/* ---------- BrowserHub (in-app browser) ---------- */
+function openBrowserHub() {
+  modal({
+    title: '🌐 Web Browser',
+    body: 'App ke andar ka browser — agent bhi isi se websites chalata hai.',
+    inputs: [{ ph: 'google.com ya poora link' }],
+    buttons: [
+      { label: 'Rahne do', ghost: true },
+      { label: 'Kholo', cb: function (vals) { bridge().browserOpen(vals[0] || 'https://www.google.com'); toast('🌐 Browser khul raha hai'); } }
+    ]
+  });
 }
 
 /* ---------- skills / learning ---------- */
