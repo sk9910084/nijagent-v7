@@ -49,16 +49,6 @@ public class MainActivity extends Activity implements AgentService.Listener {
     private String pendingDone = null;
     private FrameLayout browserContainer;
 
-    /** Agent ne code banaya — UI ko batao (Code tab refresh). */
-    public void onCodeReady(final String lang, final String code, final String fname) {
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                js("window.onCodeReady&&onCodeReady(" + q(lang) + "," + q(fname) + ")");
-            }
-        });
-    }
-
     @Override
     protected void onCreate(Bundle b) {
         super.onCreate(b);
@@ -276,6 +266,11 @@ public class MainActivity extends Activity implements AgentService.Listener {
     @Override
     public void onRecord(String json) {
         js("window.onRecordState&&onRecordState(" + json + ")");
+    }
+
+    @Override
+    public void onCodeReady(String lang, String fname) {
+        js("window.onCodeReady&&onCodeReady(" + q(lang) + "," + q(fname) + ")");
     }
 
     // ================================================================ voice

@@ -73,6 +73,8 @@ public class AgentService extends AccessibilityService {
         void onLearn(String json);
 
         void onRecord(String json);
+
+        void onCodeReady(String lang, String fname);
     }
 
     public static volatile AgentService instance;
@@ -300,7 +302,7 @@ public class AgentService extends AccessibilityService {
             // Save karo
             String fname = saveCode(lang, code);
             // Agent log me code ka preview bhejho (JS ko batana)
-            if (instance != null) instance.onCodeReady(lang, code, fname);
+            if (listener != null) listener.onCodeReady(lang, fname);
             String short_ = code.length() > 500 ? code.substring(0, 500) + "\n... (poora code Code tab me dekho)" : code;
             return "Code taiyar hai (" + lang + ")!\n\n" + short_ + "\n\nPoora code 'Code' tab me save ho gaya.";
         } catch (Exception e) {
