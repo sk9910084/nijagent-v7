@@ -568,6 +568,17 @@ textarea.inp{min-height:110px;resize:none}
         <div class="sub" style="font-size:12px;margin-top:10px" id="test-result"></div>
       </div>
       <div class="card"><div class="row">
+        <div class="iconbox" style="background:rgba(0,200,120,.15)">⚡</div>
+        <div class="grow"><h3>Groq (Free fallback)</h3>
+          <div class="sub" style="font-size:12px">Gemini fail ho to Groq try hoga. Free key: console.groq.com se banao.</div></div>
+        <span class="badge" id="int-groq-badge">…</span></div>
+        <input class="inp" id="int-groq-key" style="margin-top:6px" placeholder="gsk_...">
+        <div class="minirow">
+          <button class="mini pri" onclick="saveGroq()">Groq key save karo</button>
+        </div>
+        <div class="sub" style="font-size:12px;margin-top:10px">Pollinations (bina key) sabse last me auto try hoga.</div>
+      </div>
+      <div class="card"><div class="row">
         <div class="iconbox" style="background:rgba(154,160,170,.13)">📴</div>
         <div class="grow"><h3>On-device model</h3>
           <div class="sub" style="font-size:12px">Bina internet wala model. Abhi nahi hai.</div></div>
@@ -1080,6 +1091,8 @@ function refreshIntegrations() {
   $('int-gemini-sub').textContent = has ? 'Key saved • model: ' + model : 'Key nahi dali (Settings me dalo)';
   var gb = $('int-gemini-badge'); gb.className = 'badge ' + (has ? 'b-green' : 'b-gray'); gb.textContent = has ? 'Connected' : 'Not set';
   if ($('int-model') !== document.activeElement) $('int-model').value = model;
+  var gq = bridge().getPref('groq_key', ''); var gqb = $('int-groq-badge');
+  if (gqb) { gqb.className = 'badge ' + (gq.length > 10 ? 'b-green' : 'b-gray'); gqb.textContent = gq.length > 10 ? 'Connected' : 'Not set'; }
   $('api-usage').textContent = (s.apiCalls || 0) + ' Gemini calls ab tak'; var ab = $('api-badge'); ab.className = 'badge ' + (has ? 'b-green' : 'b-gray'); ab.textContent = has ? 'Active' : 'Off';
   renderApps();
 }
@@ -1093,6 +1106,7 @@ function renderApps() {
 }
 function saveModel() { var v = $('int-model').value.trim() || 'gemini-flash-latest'; bridge().setPref('gemini_model', v); toast('Model save ho gaya: ' + v, 'ok'); refreshIntegrations(); }
 function testGemini() { if (!bridge().hasKey()) { toast('Pehle key dalo', 'err'); return; } $('test-result').textContent = 'Test chal raha hai...'; bridge().testGemini(); }
+function saveGroq() { var v = $('int-groq-key').value.trim(); if (v.length < 10) { toast('Sahi Groq key dalo', 'err'); return; } bridge().setPref('groq_key', v); toast('Groq key save ho gayi', 'ok'); refreshIntegrations(); }
 window.onGeminiTest = function (ok, msg) { var t = $('test-result'); if (t) { t.textContent = msg; t.style.color = ok ? 'var(--green)' : '#FCA5A5'; } toast(msg, ok ? 'ok' : 'err'); };
 
 /* ---------- permissions / setup / settings ---------- */
