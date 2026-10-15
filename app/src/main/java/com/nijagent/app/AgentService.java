@@ -212,12 +212,16 @@ public class AgentService extends AccessibilityService {
         }
         // Help
         if (lower.equals("help") || lower.contains("madad") || lower.contains("kya kar sakte")) {
-            return "Main ye kar sakta hun:\n• Phone control: 'youtube kholo', 'whatsapp kholo'\n• Search: 'youtube par ___ search karo'\n• Baat: 'aaj kya kiya', 'kya seekha'\n• Skills dekho: Skills tab me\nBolo, kya karun?";
+            return "Main ye kar sakta hun:\n• Phone control: 'youtube kholo', 'whatsapp kholo'\n• Search: 'youtube par ___ search karo'\n• Baat: 'aaj kya kiya', 'kya seekha'\n• Code: 'python me ___ ka code likho'\n• Browser: andar ka browser, websites chalata hun\n• Skills dekho: Skills tab me\nBolo, kya karun?";
         }
         // Knowledge pack ki list
         if (lower.contains("knowledge") || lower.contains("kaun se gyan") ||
             lower.contains("12 skill") || lower.contains("guide")) {
             return getKnowledgeList();
+        }
+        // Code likhna: python, java, html, css, js, xml, etc.
+        if (isCodeRequest(lower)) {
+            return handleCodeRequest(msg, lower);
         }
         // Default: AI se conversational jawab (knowledge pack ke saath)
         try {
@@ -259,8 +263,110 @@ public class AgentService extends AccessibilityService {
         }
     }
 
-    private String getKnowledgeList() {
+    // ---------------------------------------------------------- Code mode
+    private boolean isCodeRequest(String lower) {
+        String[] langs = {"python", "java", "html", "css", "javascript", "js ", "xml", "json",
+            "code likho", "code banao", "program likho", "script likho", "coding", "write code"};
+        for (String k : langs) if (lower.contains(k)) return true;
+        return false;
+    }
+
+    private String detectLang(String lower) {
+        if (lower.contains("python")) return "python";
+        if (lower.contains("html")) return "html";
+        if (lower.contains("css") && !lower.contains("html")) return "css";
+        if (lower.contains("javascript") || lower.contains(" js")) return "javascript";
+        if (lower.contains("java") && !lower.contains("javascript")) return "java";
+        if (lower.contains("xml")) return "xml";
+        if (lower.contains("json")) return "json";
+        return "code";
+    }
+
+    private String handleCodeRequest(String msg, String lower) {
+        String lang = detectLang(lower);
         try {
+            String system = "You are an expert programmer. Write clean, working " + lang + " code for the user's request. "
+                + "Reply with ONLY the code, no explanations, no markdown fences, no extra text. "
+                + "Keep it concise but complete and runnable. Comments in the code are fine (Hinglish ok).";
+            String code = geminiChat(system, msg);
+            if (code == null || code.trim().length() == 0) return "Code nahi ban paya. Dobara batao kya chahiye.";
+            // Markdown fences hatao agar AI ne lagaye
+            code = code.trim();
+            if (code.startsWith("```")) {
+                int nl = code.indexOf("\n");
+                code = nl > 0 ? code.substring(nl + 1) : code.substring(3);
+            }
+            if (code.endsWith("```")) code = code.substring(0, code.length() - 3).trim();
+            // Save karo
+            String fname = saveCode(lang, code);
+            // Agent log me code ka preview bhejho (JS ko batana)
+            if (instance != null) instance.onCodeReady(lang, code, fname);
+            String short_ = code.length() > 500 ? code.substring(0, 500) + "\n... (poora code Code tab me dekho)" : code;
+            return "Code taiyar hai (" + lang + ")!\n\n" + short_ + "\n\nPoora code 'Code' tab me save ho gaya.";
+        } catch (Exception e) {
+            return "Code banate waqt error: " + e.getMessage();
+        }
+    }
+
+    private String saveCode(String lang, String code) {
+        try {
+            java.io.File dir = new java.io.File(getFilesDir(), "codes");
+            if (!dir.exists()) dir.mkdirs();
+            String ext = lang.equals("python") ? "py" : lang.equals("javascript") ? "js" : lang;
+            if (ext.equals("code")) ext = "txt";
+            String fname = "code_" + System.currentTimeMillis() + "." + ext;
+            java.io.FileWriter w = new java.io.FileWriter(new java.io.File(dir, fname));
+            w.write(code);
+            w.close();
+            return fname;
+        } catch (Throwable t) {
+            return "";
+        }
+    }
+
+    /** Code tab ke liye saved codes ki list. */
+    public String listCodes() {
+        try {
+            java.io.File dir = new java.io.File(getFilesDir(), "codes");
+            org.json.JSONArray arr = new org.json.JSONArray();
+            if (dir.exists()) {
+                java.io.File[] fs = dir.listFiles();
+                if (fs != null) {
+                    java.util.Arrays.sort(fs, new java.util.Comparator<java.io.File>() {
+                        public int compare(java.io.File a, java.io.File b) {
+                            return Long.compare(b.lastModified(), a.lastModified());
+                        }
+                    });
+                    for (java.io.File f : fs) {
+                        org.json.JSONObject o = new org.json.JSONObject();
+                        o.put("name", f.getName());
+                        o.put("size", f.length());
+                        o.put("time", f.lastModified());
+                        arr.put(o);
+                    }
+                }
+            }
+            return arr.toString();
+        } catch (Throwable t) {
+            return "[]";
+        }
+    }
+
+    public String readCode(String name) {
+        try {
+            java.io.File f = new java.io.File(new java.io.File(getFilesDir(), "codes"), name);
+            if (!f.exists() || !f.getCanonicalPath().startsWith(new java.io.File(getFilesDir(), "codes").getCanonicalPath()))
+                return "";
+            java.util.Scanner sc = new java.util.Scanner(f, "UTF-8").useDelimiter("\\A");
+            String s = sc.hasNext() ? sc.next() : "";
+            sc.close();
+            return s;
+        } catch (Throwable t) {
+            return "";
+        }
+    }
+
+    private String getKnowledgeList() {        try {
             java.io.InputStream is = getAssets().open("knowledge_skills.json");
             java.util.Scanner sc = new java.util.Scanner(is, "UTF-8").useDelimiter("\\A");
             String json = sc.hasNext() ? sc.next() : "";
@@ -577,12 +683,13 @@ public class AgentService extends AccessibilityService {
                     + "{\"thought\":\"short reason\",\"action\":\"<name>\", ...args, \"risk\":\"none|money|post|delete\"}\n\n"
                     + "Actions:\n"
                     + "- open_app {\"app\":\"YouTube\"}\n"
-                    + "- open_url {\"url\":\"https://...\"}  (http/https only, bahar browser app me khulta hai)\n"
+                    + "- open_url {\"url\":\"https://...\"}  (http/https only, app ke ANDAR ke browser me khulta hai)\n"
                     + "- browser_open {\"url\":\"https://...\"}  (ANDAR ke browser me kholo - jab site par kaam karna ho: form bharna, button dabana, page padhna)\n"
                     + "- browser_tap {\"id\":N}  andar ke browser me element N par tap\n"
                     + "- browser_type {\"text\":\"...\",\"id\":N}  andar ke browser me likho (id optional)\n"
                     + "- browser_enter | browser_back | browser_forward | browser_reload\n"
                     + "- browser_desktop {\"on\":true}  desktop site mode\n"
+                    + "- call_plugin {\"plugin\":\"<name>\",\"input\":\"...\"}  user ke jode hue API plugin ko call karo\n"
                     + "- tap {\"id\":N}  tap element N from the list\n"
                     + "- tap_text {\"text\":\"...\"}  tap by visible text/description when the element is not in the list\n"
                     + "- tap_xy {\"x\":int,\"y\":int}  pixel position inside the attached screenshot; last resort\n"
@@ -655,6 +762,8 @@ public class AgentService extends AccessibilityService {
             u.append("GOAL: ").append(goal).append("\n");
             u.append("APPS ON PHONE: ").append(apps).append("\n");
             u.append("SAVED SKILLS:\n").append(skillsTxt).append("\n");
+            String plugTxt = PluginStore.get(this).forPrompt();
+            u.append("PLUGINS (call_plugin se use karo):\n").append(plugTxt).append("\n");
             if (hint != null) u.append("NOTE: ").append(hint).append("\n");
             u.append("HISTORY:\n");
             int from = Math.max(0, hist.size() - 14);
@@ -770,7 +879,13 @@ public class AgentService extends AccessibilityService {
             String err = execStep(step, null, override, 0);
             if (err == null) {
                 trace.put(step);
-                hist.add(n + ". " + labelOfStep(step) + " -> ok");
+                String hline = n + ". " + labelOfStep(step) + " -> ok";
+                if (a.equals("call_plugin") && lastPluginResult.length() > 0) {
+                    String pr = lastPluginResult.length() > 800 ? lastPluginResult.substring(0, 800) + "..." : lastPluginResult;
+                    hline += "\nPLUGIN RESULT: " + pr;
+                    lastPluginResult = "";
+                }
+                hist.add(hline);
                 emitStep(n, label, "done", pct);
                 sleep(900);
             } else if (err.equals("USER_DENIED")) {
@@ -906,6 +1021,14 @@ public class AgentService extends AccessibilityService {
                 put(s, "a", "browser_desktop");
                 put(s, "on", act.optBoolean("on", true));
                 break;
+            case "call_plugin": {
+                String pn = act.optString("plugin");
+                if (pn.length() == 0) return null;
+                put(s, "a", "call_plugin");
+                put(s, "plugin", pn);
+                put(s, "input", act.optString("input"));
+                break;
+            }
             case "tap":
             case "long_press": {
                 Elem e = elem(obs, act.optInt("id", -1));
@@ -1042,6 +1165,8 @@ public class AgentService extends AccessibilityService {
                 case "browser_desktop":
                     browser().setDesktop(s.optBoolean("on", true));
                     return null;
+                case "call_plugin":
+                    return doCallPlugin(s.optString("plugin"), s.optString("input"));
                 case "tap":
                 case "long_press": {
                     AccessibilityNodeInfo n = override;
@@ -1136,15 +1261,16 @@ public class AgentService extends AccessibilityService {
         String u = url == null ? "" : url.trim();
         String low = u.toLowerCase();
         if (!(low.startsWith("http://") || low.startsWith("https://"))) return "Sirf http/https link allowed hai";
-        Intent i = new Intent(Intent.ACTION_VIEW, Uri.parse(u));
-        i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        // Sab URLs andar ke BrowserHub me kholo (bahar ke browser me nahi)
+        // aur browser mode on karo taaki agent page dekh sake
         try {
-            startActivity(i);
+            browserMode = true;
+            browser().loadAndWait(u, 10000);
+            return null;
         } catch (Throwable t) {
-            return "Link khul nahi paya";
+            browserMode = false;
+            return "Link khul nahi paya: " + t.getMessage();
         }
-        sleep(2500);
-        return null;
     }
 
     // ---------------------------------------------------------- BrowserHub actions
@@ -1174,8 +1300,7 @@ public class AgentService extends AccessibilityService {
         }
     }
 
-    private String doBrowserType(String text, int id) {
-        try {
+    private String doBrowserType(String text, int id) {        try {
             BrowserHub b = browser();
             if (id > 0) {
                 JSONObject f = b.find(id, null, false);
@@ -1190,6 +1315,21 @@ public class AgentService extends AccessibilityService {
             return ok ? null : "Browser me type nahi ho paya";
         } catch (Throwable t) {
             return "Browser type fail: " + t.getMessage();
+        }
+    }
+
+    // ---------------------------------------------------------- Plugin call
+    // Plugin ka result agent ke summary me jayega taaki AI use padh sake
+    private String lastPluginResult = "";
+
+    private String doCallPlugin(String plugin, String input) {
+        try {
+            String res = PluginStore.get(this).call(plugin, input == null ? "" : input, null);
+            lastPluginResult = res;
+            if (res.startsWith("ERROR")) return res;
+            return null;
+        } catch (Throwable t) {
+            return "Plugin call fail: " + t.getMessage();
         }
     }
 
@@ -2447,6 +2587,8 @@ public class AgentService extends AccessibilityService {
                 return "Browser reload";
             case "browser_desktop":
                 return "Desktop mode " + (act.optBoolean("on", true) ? "on" : "off");
+            case "call_plugin":
+                return "Plugin: " + act.optString("plugin");
             case "tap":
             case "long_press": {
                 Elem e = elem(obs, act.optInt("id", -1));

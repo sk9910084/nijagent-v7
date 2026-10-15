@@ -49,6 +49,16 @@ public class MainActivity extends Activity implements AgentService.Listener {
     private String pendingDone = null;
     private FrameLayout browserContainer;
 
+    /** Agent ne code banaya — UI ko batao (Code tab refresh). */
+    public void onCodeReady(final String lang, final String code, final String fname) {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                js("window.onCodeReady&&onCodeReady(" + q(lang) + "," + q(fname) + ")");
+            }
+        });
+    }
+
     @Override
     protected void onCreate(Bundle b) {
         super.onCreate(b);
@@ -436,6 +446,75 @@ public class MainActivity extends Activity implements AgentService.Listener {
         @JavascriptInterface
         public void browserGo(final String input) {
             BrowserHub.get(MainActivity.this).load(input);
+        }
+
+        // ---- Plugins
+        @JavascriptInterface
+        public String getPlugins() {
+            return PluginStore.get(MainActivity.this).listJson();
+        }
+
+        @JavascriptInterface
+        public String addPlugin(String name, String url, String method, String apiKey, String description) {
+            String id = PluginStore.get(MainActivity.this).add(name, url, method, apiKey, "Authorization", description);
+            return id == null ? "" : id;
+        }
+
+        @JavascriptInterface
+        public boolean deletePlugin(String id) {
+            return PluginStore.get(MainActivity.this).remove(id);
+        }
+
+        @JavascriptInterface
+        public boolean togglePlugin(String id, boolean on) {
+            return PluginStore.get(MainActivity.this).toggle(id, on);
+        }
+
+        @JavascriptInterface
+        public String testPlugin(final String id, final String input) {            final String[] out = {""};
+            Thread t = new Thread(new Runnable() {
+                @Override public void run() {
+                    out[0] = PluginStore.get(MainActivity.this).call(id, input == null ? "" : input, null);
+                }
+            });
+            t.start();
+            try { t.join(35000); } catch (InterruptedException ignored) {}
+            String r = out[0];
+            return r.length() > 2000 ? r.substring(0, 2000) + "..." : r;
+        }
+
+        // ---- Code files
+        @JavascriptInterface
+        public String getCodes() {
+            AgentService s = AgentService.instance;
+            return s == null ? "[]" : s.listCodes();
+        }
+
+        @JavascriptInterface
+        public String readCode(String name) {
+            AgentService s = AgentService.instance;
+            return s == null ? "" : s.readCode(name);
+        }
+
+        @JavascriptInterface
+        public void previewHtml(final String name) {
+            final AgentService s = AgentService.instance;
+            if (s == null) return;
+            new Thread(new Runnable() {
+                @Override public void run() {
+                    final String html = s.readCode(name);
+                    runOnUiThread(new Runnable() {
+                        @Override public void run() {
+                            BrowserHub b = BrowserHub.get(MainActivity.this);
+                            FrameLayout holder = (FrameLayout) browserContainer.getTag();
+                            b.attach(holder != null ? holder : browserContainer, MainActivity.this);
+                            browserContainer.setVisibility(View.VISIBLE);
+                            b.shownInActivity = true;
+                            b.loadHtml(html);
+                        }
+                    });
+                }
+            }).start();
         }
 
         @JavascriptInterface

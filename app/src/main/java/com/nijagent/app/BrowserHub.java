@@ -322,6 +322,22 @@ public class BrowserHub {
         waitLoaded(ms);
     }
 
+    /** HTML string ko seedha browser me dikhao (code preview ke liye). */
+    public void loadHtml(final String html) {
+        ensure();
+        onUi(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    web.loadDataWithBaseURL(null, html == null ? "" : html, "text/html", "UTF-8", null);
+                    loading = false;
+                    url = "preview://code";
+                } catch (Throwable ignored) {
+                }
+            }
+        });
+    }
+
     public void goBack() {
         onUi(new Runnable() {
             @Override
