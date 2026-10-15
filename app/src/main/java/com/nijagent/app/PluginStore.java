@@ -69,19 +69,23 @@ public class PluginStore {
 
     public synchronized String listJson() {
         // apiKey ko list me mask karo
-        JSONArray out = new JSONArray();
-        for (int i = 0; i < plugins.length(); i++) {
-            JSONObject p = plugins.optJSONObject(i);
-            if (p == null) continue;
-            JSONObject c = new JSONObject(p.toString());
-            if (c.optString("apiKey").length() > 4) {
-                c.put("apiKey", "****" + c.optString("apiKey").substring(c.optString("apiKey").length() - 4));
-            } else if (c.optString("apiKey").length() > 0) {
-                c.put("apiKey", "****");
+        try {
+            JSONArray out = new JSONArray();
+            for (int i = 0; i < plugins.length(); i++) {
+                JSONObject p = plugins.optJSONObject(i);
+                if (p == null) continue;
+                JSONObject c = new JSONObject(p.toString());
+                if (c.optString("apiKey").length() > 4) {
+                    c.put("apiKey", "****" + c.optString("apiKey").substring(c.optString("apiKey").length() - 4));
+                } else if (c.optString("apiKey").length() > 0) {
+                    c.put("apiKey", "****");
+                }
+                out.put(c);
             }
-            out.put(c);
+            return out.toString();
+        } catch (Throwable t) {
+            return "[]";
         }
-        return out.toString();
     }
 
     public synchronized JSONObject find(String idOrName) {
