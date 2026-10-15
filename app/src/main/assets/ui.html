@@ -458,6 +458,8 @@ textarea.inp{min-height:110px;resize:none}
       <div class="mitem" onclick="startVoice('home')"><span class="me">🎤</span>Voice Mode<span class="chev">›</span></div>
       <div class="mitem" onclick="showScreen('tools')"><span class="me">🛠</span>Tools<span class="chev">›</span></div>
       <div class="mitem" onclick="showScreen('integrations')"><span class="me">🔗</span>Integrations (Apps &amp; APIs)<span class="chev">›</span></div>
+      <div class="mitem" onclick="showScreen('plugins')"><span class="me">🔌</span>Plugins (MCP / APIs)<span class="chev">›</span></div>
+      <div class="mitem" onclick="showScreen('codes')"><span class="me">💻</span>My Code<span class="chev">›</span></div>
       <div class="mitem" onclick="showScreen('learning')"><span class="me">🧠</span>Self Learning<span class="chev">›</span></div>
       <div class="mitem" onclick="showScreen('settings');scrollToId('set-updates')"><span class="me">🔄</span>Updates &amp; System<span class="chev">›</span></div>
       <div class="mitem" onclick="showScreen('settings')"><span class="me">⚙️</span>Settings<span class="chev">›</span></div>
@@ -495,6 +497,29 @@ textarea.inp{min-height:110px;resize:none}
     </div>
     <div class="tgrid" id="tools-grid"></div>
     <div class="sub" style="font-size:12px;margin-top:14px">Koi bhi app khud chalane ke liye Home par command likho. Ye buttons sirf shortcut hain.</div>
+  </div>
+  <div class="nav" data-nav></div>
+</div>
+
+<!-- ============ PLUGINS ============ -->
+<div class="screen" id="scr-plugins">
+  <div class="scroll">
+    <div class="row"><div style="font-size:24px;padding:0 10px 0 0" onclick="goBack()">‹</div>
+      <h2 style="font-size:19px">🔌 Plugins</h2>
+      <button class="mini pri" style="margin-left:auto" onclick="addPluginFlow()">+ Add</button></div>
+    <div class="sub" style="font-size:12px;margin:8px 0">Apne API endpoints jodo — ChatGPT, Gemini, Claude, Grok, ya koi bhi HTTP API. Agent <b>call_plugin</b> se inhe use karega. API key sirf phone me rehti hai.</div>
+    <div id="plugins-list"></div>
+  </div>
+  <div class="nav" data-nav></div>
+</div>
+
+<!-- ============ MY CODE ============ -->
+<div class="screen" id="scr-codes">
+  <div class="scroll">
+    <div class="row"><div style="font-size:24px;padding:0 10px 0 0" onclick="goBack()">‹</div>
+      <h2 style="font-size:19px">💻 My Code</h2></div>
+    <div class="sub" style="font-size:12px;margin:8px 0">Agent se chat me kaho "python me ___ ka code likho" — code yahan save hoga. HTML files ka preview bhi dekh sakte ho.</div>
+    <div id="codes-list"></div>
   </div>
   <div class="nav" data-nav></div>
 </div>
@@ -801,7 +826,7 @@ function closeModal() { $('modal').className = ''; }
 function info(title, body) { modal({ title: title, body: body, buttons: [{ label: 'Theek hai' }] }); }
 
 /* ---------- navigation ---------- */
-var NAVMAP = { home: 'home', tasks: 'tasks', agent: 'agent', tools: 'tools', menu: 'menu', settings: 'menu', privacy: 'menu', perms: 'menu', learning: 'tools', integrations: 'tools' };
+var NAVMAP = { home: 'home', tasks: 'tasks', agent: 'agent', tools: 'tools', menu: 'menu', settings: 'menu', privacy: 'menu', perms: 'menu', learning: 'tools', integrations: 'tools', plugins: 'menu', codes: 'menu' };
 function navHtml(active) {
   function btn(k, e, t, cls) { return '<button class="' + (active === k ? 'on ' : '') + (cls || '') + '" onclick="showScreen(\'' + k + '\')"><span class="ne">' + e + '</span>' + t + '</button>'; }
   return btn('home', '🏠', 'Home') + btn('tasks', '📋', 'Tasks') + btn('agent', '🤖', 'Agent', active === 'agent' ? 'agenton' : '') + btn('tools', '🛠', 'Tools') + btn('menu', '👤', 'Profile');
@@ -832,7 +857,7 @@ window.handleBack = function () {
 function scrollToId(id) { setTimeout(function () { var e = $(id); if (e) e.scrollIntoView({ behavior: 'smooth', block: 'start' }); }, 120); }
 function refreshScreen() {
   var f = { home: refreshHome, agent: refreshAgent, tasks: renderTasks, menu: refreshMenu, tools: renderTools, learning: refreshLearning,
-    integrations: refreshIntegrations, perms: refreshPerms, settings: refreshSettings, setup: refreshSetup }[cur];
+    integrations: refreshIntegrations, perms: refreshPerms, settings: refreshSettings, setup: refreshSetup, plugins: renderPlugins, codes: renderCodes }[cur];
   if (f) f();
 }
 
@@ -1034,6 +1059,88 @@ function openBrowserHub() {
   });
 }
 
+/* ---------- Plugins ---------- */
+var plugins = [];
+function loadPlugins() { plugins = jp(bridge().getPlugins(), []); if (cur === 'plugins') renderPlugins(); }
+function renderPlugins() {
+  var el = $('plugins-list');
+  if (!plugins.length) { el.innerHTML = '<div class="card"><div class="sub">Koi plugin nahi. + Add dabakar apna API jodo.</div></div>'; return; }
+  el.innerHTML = plugins.map(function (p, i) {
+    return '<div class="card"><div class="row"><div class="grow"><div style="font-weight:600">' + esc(p.name) + '</div>' +
+      '<div class="sub" style="font-size:12px">' + esc(p.description || p.url) + '</div>' +
+      '<div class="sub" style="font-size:11px">Key: ' + esc(p.apiKey || 'nahi') + '</div></div>' +
+      '<button class="mini" onclick="togglePlugin(' + i + ')">' + (p.enabled ? 'ON' : 'OFF') + '</button></div>' +
+      '<div class="minirow" style="margin-top:8px"><button class="mini" onclick="testPlugin(' + i + ')">Test</button>' +
+      '<button class="mini" onclick="delPlugin(' + i + ')">Delete</button></div>' +
+      '<div class="sub" id="ptest' + i + '" style="font-size:12px;margin-top:6px"></div></div>';
+  }).join('');
+}
+function addPluginFlow() {
+  modal({
+    title: 'Naya Plugin',
+    inputs: [
+      { label: 'Naam (jaise: My ChatGPT)', ph: 'Plugin ka naam' },
+      { label: 'API URL', ph: 'https://api.example.com/v1/chat' },
+      { label: 'Method', ph: 'POST', val: 'POST' },
+      { label: 'API Key (secret, sirf phone me)', ph: 'sk-...' },
+      { label: 'Description', ph: 'Ye plugin kya karta hai' }
+    ],
+    buttons: [
+      { label: 'Rahne do', ghost: true },
+      { label: 'Add karo', cb: function (v) {
+        if (!v[0] || !v[1]) { toast('Naam aur URL zaroori hai'); return; }
+        var id = bridge().addPlugin(v[0], v[1], v[2] || 'POST', v[3] || '', v[4] || '');
+        if (id) { toast('Plugin jud gaya'); loadPlugins(); } else toast('Add nahi ho paya');
+      } }
+    ]
+  });
+}
+function delPlugin(i) {
+  var p = plugins[i];
+  modal({ title: 'Delete?', body: p.name + ' hatao?', buttons: [
+    { label: 'Nahi', ghost: true },
+    { label: 'Haan', cb: function () { bridge().deletePlugin(p.id); loadPlugins(); } }
+  ]});
+}
+function togglePlugin(i) { bridge().togglePlugin(plugins[i].id, !plugins[i].enabled); loadPlugins(); }
+function testPlugin(i) {
+  var p = plugins[i];
+  $('ptest' + i).textContent = 'Test ho raha hai...';
+  setTimeout(function () {
+    var r = bridge().testPlugin(p.id, 'hello');
+    $('ptest' + i).textContent = r;
+  }, 50);
+}
+
+/* ---------- My Code ---------- */
+var codes = [];
+function loadCodes() { codes = jp(bridge().getCodes(), []); if (cur === 'codes') renderCodes(); }
+function renderCodes() {
+  var el = $('codes-list');
+  if (!codes.length) { el.innerHTML = '<div class="card"><div class="sub">Abhi koi code nahi. Agent se kaho "python me ___ ka code likho".</div></div>'; return; }
+  el.innerHTML = codes.map(function (c, i) {
+    var isHtml = /\.html?$/i.test(c.name);
+    return '<div class="card"><div class="row"><div class="grow"><div style="font-weight:600">' + esc(c.name) + '</div>' +
+      '<div class="sub" style="font-size:12px">' + Math.round(c.size / 1024 * 10) / 10 + ' KB</div></div></div>' +
+      '<div class="minirow" style="margin-top:8px"><button class="mini pri" onclick="viewCode(' + i + ')">Dekho</button>' +
+      (isHtml ? '<button class="mini" onclick="bridge().previewHtml(\'' + esc(c.name) + '\')">👁 Preview</button>' : '') + '</div></div>';
+  }).join('');
+}
+function viewCode(i) {
+  var c = codes[i];
+  var code = bridge().readCode(c.name);
+  modal({ title: c.name, body: code.length > 3000 ? code.substring(0, 3000) + '\n... (poora code lamba hai)' : code,
+    buttons: [{ label: 'Band karo' }, { label: 'Copy', cb: function () { copyText(code); } }] });
+}
+function copyText(t) {
+  try {
+    var ta = document.createElement('textarea'); ta.value = t; document.body.appendChild(ta);
+    ta.select(); document.execCommand('copy'); document.body.removeChild(ta);
+    toast('Copy ho gaya');
+  } catch (e) { toast('Copy nahi ho paya'); }
+}
+window.onCodeReady = function (lang, fname) { loadCodes(); if (cur === 'codes') renderCodes(); };
+
 /* ---------- skills / learning ---------- */
 function loadSkills() { skills = jp(bridge().getSkills(), []); skills.sort(function (a, b) { return (b.updated || 0) - (a.updated || 0); }); if (cur === 'learning') refreshLearning(); }
 window.onSkillsChanged = function () { loadSkills(); };
@@ -1200,12 +1307,12 @@ window.onVoiceResult = function (t) {
   if (!t) { toast('Kuch sunai nahi diya'); goBack(); return; }
   agentLog(t, 'user'); runTask(t);
 };
-window.onResumeApp = function () { loadHistory(); loadSkills(); refreshScreen(); };
+window.onResumeApp = function () { loadHistory(); loadSkills(); loadPlugins(); loadCodes(); refreshScreen(); };
 
 /* ---------- boot ---------- */
 window.addEventListener('online', refreshStatus); window.addEventListener('offline', refreshStatus);
 (function boot() {
-  stack = []; loadSkills();
+  stack = []; loadSkills(); loadPlugins(); loadCodes();
   setTimeout(function () { $('splashbar').style.width = '100%'; }, 80);
   setTimeout(function () { var next = pb('onboarded', false) ? 'home' : 'onboarding'; stack = []; showScreen(next); }, 1900);
 })();
